@@ -1,0 +1,24 @@
+{
+    "configurations": [
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:jez-blog}",
+            "name": "Debug jez-blog",
+            "target": "jez-blog",
+            "configuration": "debug",
+            "preLaunchTask": "swift: Build Debug jez-blog"
+        },
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:jez-blog}",
+            "name": "Release jez-blog",
+            "target": "jez-blog",
+            "configuration": "release",
+            "preLaunchTask": "swift: Build Release jez-blog"
+        }
+    ]
+}
