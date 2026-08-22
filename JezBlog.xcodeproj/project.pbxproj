@@ -1,0 +1,458 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		BF0000000000000000000001 /* JezBlogApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FR0000000000000000000001 /* JezBlogApp.swift */; };
+		BF0000000000000000000002 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = FR0000000000000000000002 /* Enums.swift */; };
+		BF0000000000000000000003 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = FR0000000000000000000003 /* Post.swift */; };
+		BF0000000000000000000004 /* ContentBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = FR0000000000000000000004 /* ContentBlock.swift */; };
+		BF0000000000000000000005 /* MediaAsset.swift in Sources */ = {isa = PBXBuildFile; fileRef = FR0000000000000000000005 /* MediaAsset.swift */; };
+		BF0000000000000000000006 /* ThreePaneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FR0000000000000000000006 /* ThreePaneView.swift */; };
+		BF0000000000000000000007 /* SidebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FR0000000000000000000007 /* SidebarView.swift */; };
+		BF0000000000000000000008 /* TimelineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FR0000000000000000000008 /* TimelineView.swift */; };
+		BF0000000000000000000009 /* PostPreviewRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = FR0000000000000000000009 /* PostPreviewRow.swift */; };
+		BF0000000000000000000010 /* TagChipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FR0000000000000000000010 /* TagChipView.swift */; };
+		BF0000000000000000000011 /* DetailContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FR0000000000000000000011 /* DetailContainerView.swift */; };
+		BF0000000000000000000012 /* PostToolbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FR0000000000000000000012 /* PostToolbarView.swift */; };
+		BF0000000000000000000013 /* ThreadComposerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FR0000000000000000000013 /* ThreadComposerView.swift */; };
+		BF0000000000000000000014 /* BlockCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FR0000000000000000000014 /* BlockCardView.swift */; };
+		BF0000000000000000000015 /* MediaArrangementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FR0000000000000000000015 /* MediaArrangementView.swift */; };
+		BF0000000000000000000016 /* ShortImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FR0000000000000000000016 /* ShortImageView.swift */; };
+		BF0000000000000000000017 /* VideoClipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FR0000000000000000000017 /* VideoClipView.swift */; };
+		BF0000000000000000000018 /* LinkCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FR0000000000000000000018 /* LinkCardView.swift */; };
+		BF0000000000000000000019 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = FR0000000000000000000019 /* Theme.swift */; };
+		BF0000000000000000000020 /* EmptyStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FR0000000000000000000020 /* EmptyStateView.swift */; };
+		BF0000000000000000000021 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FR0000000000000000000021 /* Assets.xcassets */; };
+		BF0000000000000000000030 /* MediaStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = FR0000000000000000000030 /* MediaStore.swift */; };
+		BF0000000000000000000031 /* LinkMetadataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FR0000000000000000000031 /* LinkMetadataService.swift */; };
+		BF0000000000000000000032 /* SiteExporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FR0000000000000000000032 /* SiteExporter.swift */; };
+		BF0000000000000000000033 /* MediaSlotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FR0000000000000000000033 /* MediaSlotView.swift */; };
+		BF0000000000000000000034 /* MediaDrop.swift in Sources */ = {isa = PBXBuildFile; fileRef = FR0000000000000000000034 /* MediaDrop.swift */; };
+		BF0000000000000000000035 /* NewPostButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = FR0000000000000000000035 /* NewPostButtons.swift */; };
+		BF0000000000000000000036 /* MediaGalleryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FR0000000000000000000036 /* MediaGalleryView.swift */; };
+		BF0000000000000000000037 /* MediaPreviewWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = FR0000000000000000000037 /* MediaPreviewWindow.swift */; };
+		BF0000000000000000000038 /* CaptionCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FR0000000000000000000038 /* CaptionCardView.swift */; };
+		BF0000000000000000000039 /* SinglePostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FR0000000000000000000039 /* SinglePostView.swift */; };
+		BF0000000000000000000040 /* Folder.swift in Sources */ = {isa = PBXBuildFile; fileRef = FR0000000000000000000040 /* Folder.swift */; };
+		BF0000000000000000000041 /* FolderSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FR0000000000000000000041 /* FolderSectionView.swift */; };
+/* End PBXBuildFile section */
+
+
+
+/* Begin PBXFileReference section */
+		FR0000000000000000000000 /* JezBlog.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JezBlog.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		FR0000000000000000000001 /* JezBlogApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JezBlogApp.swift; sourceTree = "<group>"; };
+		FR0000000000000000000002 /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
+		FR0000000000000000000003 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
+		FR0000000000000000000004 /* ContentBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentBlock.swift; sourceTree = "<group>"; };
+		FR0000000000000000000005 /* MediaAsset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaAsset.swift; sourceTree = "<group>"; };
+		FR0000000000000000000006 /* ThreePaneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreePaneView.swift; sourceTree = "<group>"; };
+		FR0000000000000000000007 /* SidebarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarView.swift; sourceTree = "<group>"; };
+		FR0000000000000000000008 /* TimelineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineView.swift; sourceTree = "<group>"; };
+		FR0000000000000000000009 /* PostPreviewRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostPreviewRow.swift; sourceTree = "<group>"; };
+		FR0000000000000000000010 /* TagChipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagChipView.swift; sourceTree = "<group>"; };
+		FR0000000000000000000011 /* DetailContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailContainerView.swift; sourceTree = "<group>"; };
+		FR0000000000000000000012 /* PostToolbarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostToolbarView.swift; sourceTree = "<group>"; };
+		FR0000000000000000000013 /* ThreadComposerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadComposerView.swift; sourceTree = "<group>"; };
+		FR0000000000000000000014 /* BlockCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockCardView.swift; sourceTree = "<group>"; };
+		FR0000000000000000000015 /* MediaArrangementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaArrangementView.swift; sourceTree = "<group>"; };
+		FR0000000000000000000016 /* ShortImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortImageView.swift; sourceTree = "<group>"; };
+		FR0000000000000000000017 /* VideoClipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoClipView.swift; sourceTree = "<group>"; };
+		FR0000000000000000000018 /* LinkCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkCardView.swift; sourceTree = "<group>"; };
+		FR0000000000000000000019 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		FR0000000000000000000020 /* EmptyStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyStateView.swift; sourceTree = "<group>"; };
+		FR0000000000000000000021 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		FR0000000000000000000022 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FR0000000000000000000023 /* JezBlog.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = JezBlog.entitlements; sourceTree = "<group>"; };
+		FR0000000000000000000030 /* MediaStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaStore.swift; sourceTree = "<group>"; };
+		FR0000000000000000000031 /* LinkMetadataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkMetadataService.swift; sourceTree = "<group>"; };
+		FR0000000000000000000032 /* SiteExporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteExporter.swift; sourceTree = "<group>"; };
+		FR0000000000000000000033 /* MediaSlotView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaSlotView.swift; sourceTree = "<group>"; };
+		FR0000000000000000000034 /* MediaDrop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaDrop.swift; sourceTree = "<group>"; };
+		FR0000000000000000000035 /* NewPostButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPostButtons.swift; sourceTree = "<group>"; };
+		FR0000000000000000000036 /* MediaGalleryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaGalleryView.swift; sourceTree = "<group>"; };
+		FR0000000000000000000037 /* MediaPreviewWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaPreviewWindow.swift; sourceTree = "<group>"; };
+		FR0000000000000000000038 /* CaptionCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionCardView.swift; sourceTree = "<group>"; };
+		FR0000000000000000000039 /* SinglePostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SinglePostView.swift; sourceTree = "<group>"; };
+		FR0000000000000000000040 /* Folder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Folder.swift; sourceTree = "<group>"; };
+		FR0000000000000000000041 /* FolderSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderSectionView.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+
+
+/* Begin PBXFrameworksBuildPhase section */
+		PH0000000000000000000001 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		GR0000000000000000000001 = {
+			isa = PBXGroup;
+			children = (
+				GR0000000000000000000002 /* JezBlog */,
+				GR0000000000000000000003 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		GR0000000000000000000002 /* JezBlog */ = {
+			isa = PBXGroup;
+			children = (
+				FR0000000000000000000001 /* JezBlogApp.swift */,
+				GR0000000000000000000004 /* Models */,
+				GR0000000000000000000005 /* Views */,
+				GR0000000000000000000007 /* Support */,
+				FR0000000000000000000021 /* Assets.xcassets */,
+				FR0000000000000000000022 /* Info.plist */,
+				FR0000000000000000000023 /* JezBlog.entitlements */,
+			);
+			path = JezBlog;
+			sourceTree = "<group>";
+		};
+		GR0000000000000000000003 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				FR0000000000000000000000 /* JezBlog.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		GR0000000000000000000004 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				FR0000000000000000000002 /* Enums.swift */,
+				FR0000000000000000000003 /* Post.swift */,
+				FR0000000000000000000004 /* ContentBlock.swift */,
+				FR0000000000000000000005 /* MediaAsset.swift */,
+				FR0000000000000000000040 /* Folder.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		GR0000000000000000000005 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				FR0000000000000000000006 /* ThreePaneView.swift */,
+				FR0000000000000000000007 /* SidebarView.swift */,
+				FR0000000000000000000008 /* TimelineView.swift */,
+				FR0000000000000000000009 /* PostPreviewRow.swift */,
+				FR0000000000000000000010 /* TagChipView.swift */,
+				FR0000000000000000000011 /* DetailContainerView.swift */,
+				FR0000000000000000000012 /* PostToolbarView.swift */,
+				FR0000000000000000000020 /* EmptyStateView.swift */,
+				FR0000000000000000000035 /* NewPostButtons.swift */,
+				FR0000000000000000000036 /* MediaGalleryView.swift */,
+				FR0000000000000000000037 /* MediaPreviewWindow.swift */,
+				FR0000000000000000000041 /* FolderSectionView.swift */,
+				GR0000000000000000000006 /* Editors */,
+
+
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		GR0000000000000000000006 /* Editors */ = {
+			isa = PBXGroup;
+			children = (
+				FR0000000000000000000013 /* ThreadComposerView.swift */,
+				FR0000000000000000000014 /* BlockCardView.swift */,
+				FR0000000000000000000015 /* MediaArrangementView.swift */,
+				FR0000000000000000000016 /* ShortImageView.swift */,
+				FR0000000000000000000017 /* VideoClipView.swift */,
+				FR0000000000000000000018 /* LinkCardView.swift */,
+				FR0000000000000000000039 /* SinglePostView.swift */,
+				FR0000000000000000000033 /* MediaSlotView.swift */,
+				FR0000000000000000000038 /* CaptionCardView.swift */,
+			);
+			path = Editors;
+
+			sourceTree = "<group>";
+		};
+		GR0000000000000000000007 /* Support */ = {
+			isa = PBXGroup;
+			children = (
+				FR0000000000000000000019 /* Theme.swift */,
+				FR0000000000000000000030 /* MediaStore.swift */,
+				FR0000000000000000000031 /* LinkMetadataService.swift */,
+				FR0000000000000000000032 /* SiteExporter.swift */,
+				FR0000000000000000000034 /* MediaDrop.swift */,
+			);
+			path = Support;
+
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		TG0000000000000000000001 /* JezBlog */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CL0000000000000000000001 /* Build configuration list for PBXNativeTarget "JezBlog" */;
+			buildPhases = (
+				PH0000000000000000000002 /* Sources */,
+				PH0000000000000000000001 /* Frameworks */,
+				PH0000000000000000000003 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = JezBlog;
+			productName = JezBlog;
+			productReference = FR0000000000000000000000 /* JezBlog.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		PJ0000000000000000000001 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1500;
+				LastUpgradeCheck = 1500;
+				TargetAttributes = {
+					TG0000000000000000000001 = {
+						CreatedOnToolsVersion = 15.0;
+					};
+				};
+			};
+			buildConfigurationList = CL0000000000000000000002 /* Build configuration list for PBXProject "JezBlog" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = GR0000000000000000000001;
+			productRefGroup = GR0000000000000000000003 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				TG0000000000000000000001 /* JezBlog */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		PH0000000000000000000003 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BF0000000000000000000021 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		PH0000000000000000000002 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BF0000000000000000000001 /* JezBlogApp.swift in Sources */,
+				BF0000000000000000000002 /* Enums.swift in Sources */,
+				BF0000000000000000000003 /* Post.swift in Sources */,
+				BF0000000000000000000004 /* ContentBlock.swift in Sources */,
+				BF0000000000000000000005 /* MediaAsset.swift in Sources */,
+				BF0000000000000000000006 /* ThreePaneView.swift in Sources */,
+				BF0000000000000000000007 /* SidebarView.swift in Sources */,
+				BF0000000000000000000008 /* TimelineView.swift in Sources */,
+				BF0000000000000000000009 /* PostPreviewRow.swift in Sources */,
+				BF0000000000000000000010 /* TagChipView.swift in Sources */,
+				BF0000000000000000000011 /* DetailContainerView.swift in Sources */,
+				BF0000000000000000000012 /* PostToolbarView.swift in Sources */,
+				BF0000000000000000000013 /* ThreadComposerView.swift in Sources */,
+				BF0000000000000000000014 /* BlockCardView.swift in Sources */,
+				BF0000000000000000000015 /* MediaArrangementView.swift in Sources */,
+				BF0000000000000000000016 /* ShortImageView.swift in Sources */,
+				BF0000000000000000000017 /* VideoClipView.swift in Sources */,
+				BF0000000000000000000018 /* LinkCardView.swift in Sources */,
+				BF0000000000000000000019 /* Theme.swift in Sources */,
+				BF0000000000000000000020 /* EmptyStateView.swift in Sources */,
+				BF0000000000000000000030 /* MediaStore.swift in Sources */,
+				BF0000000000000000000031 /* LinkMetadataService.swift in Sources */,
+				BF0000000000000000000032 /* SiteExporter.swift in Sources */,
+				BF0000000000000000000033 /* MediaSlotView.swift in Sources */,
+				BF0000000000000000000034 /* MediaDrop.swift in Sources */,
+				BF0000000000000000000035 /* NewPostButtons.swift in Sources */,
+				BF0000000000000000000036 /* MediaGalleryView.swift in Sources */,
+				BF0000000000000000000037 /* MediaPreviewWindow.swift in Sources */,
+				BF0000000000000000000038 /* CaptionCardView.swift in Sources */,
+				BF0000000000000000000039 /* SinglePostView.swift in Sources */,
+				BF0000000000000000000040 /* Folder.swift in Sources */,
+				BF0000000000000000000041 /* FolderSectionView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+
+
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		CF0000000000000000000001 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		CF0000000000000000000002 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+			};
+			name = Release;
+		};
+		CF0000000000000000000003 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = JezBlog/JezBlog.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = JezBlog/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jezblog.app;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		CF0000000000000000000004 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = JezBlog/JezBlog.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = JezBlog/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jezblog.app;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		CL0000000000000000000001 /* Build configuration list for PBXNativeTarget "JezBlog" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CF0000000000000000000003 /* Debug */,
+				CF0000000000000000000004 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CL0000000000000000000002 /* Build configuration list for PBXProject "JezBlog" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CF0000000000000000000001 /* Debug */,
+				CF0000000000000000000002 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = PJ0000000000000000000001 /* Project object */;
+}

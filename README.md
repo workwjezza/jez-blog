@@ -1,229 +1,115 @@
 # jez-blog
 
-A native macOS blogging application built with SwiftUI and SwiftData. This is a "media garden" for personal content creation with a luxurious, inspiring interface.
+A native macOS **media garden** — a calm, three-pane place to grow personal posts.
+Built with SwiftUI + SwiftData for macOS 14+.
 
-![macOS](https://img.shields.io/badge/macOS-14.0+-blue)
-![Swift](https://img.shields.io/badge/Swift-5.9+-orange)
-![SwiftUI](https://img.shields.io/badge/SwiftUI-Native-green)
-![SwiftData](https://img.shields.io/badge/SwiftData-Persistence-purple)
+![type](https://img.shields.io/badge/platform-macOS%2014%2B-black) ![swift](https://img.shields.io/badge/Swift-5.9-orange)
 
-## ✨ Features
+## Open it
 
-### Fully Implemented
-- **Three-Pane Layout**: Sidebar, Timeline, and Detail Editor
-- **Thread Composer**: Fully functional multi-block text editor with:
-  - Add, insert, delete, and reorder blocks
-  - Character counting with visual limits (280 chars)
-  - Smooth spring animations
-  - Hover-based controls
-  - Focus indicators
-- **SwiftData Persistence**: Auto-saves all changes
-- **Search & Filter**: Real-time search across posts
-- **Collections**: Filter by All, Threads, Media, Links, Unpublished
-- **Publish Toggle**: Mark posts for web publishing
-- **Tag System**: Automatic tag aggregation and filtering
-
-### Placeholder Editors (Future Implementation)
-- Media Arrangement (2x2 grid of images)
-- Short + Image (text with single image)
-- Video Clip (video with caption)
-- Link Card (URL with preview and commentary)
-
-## 🎨 Design
-
-- **Accent Color**: #FF6B35 (warm orange)
-- **Typography**: Serif for content, system for UI
-- **Animations**: Spring-based (response: 0.3, dampingFraction: 0.8)
-- **Window Size**: 1400×900 pixels
-- **Materials**: Ultra-thin material for sidebar
-
-## 🏗️ Architecture
-
-### Data Models (SwiftData)
-- **Post**: Main content container with computed display type
-- **ContentBlock**: Text/embed blocks with character limits
-- **MediaAsset**: Images, videos, and link previews
-- **Enums**: PostDisplayType, BlockType, AssetType
-
-### View Hierarchy
-```
-ThreePaneView (NavigationSplitView)
-├── SidebarView
-│   ├── New Post Menu
-│   ├── Collections
-│   └── Tags
-├── TimelineView
-│   ├── Search Bar
-│   └── PostPreviewRow (list)
-└── DetailContainerView
-    ├── PostToolbarView
-    └── Editor (switches based on post type)
-        ├── ThreadComposerView ⭐
-        ├── MediaArrangementView
-        ├── ShortImageView
-        ├── VideoClipView
-        └── LinkCardView
+```bash
+open JezBlog.xcodeproj
 ```
 
-## 🚀 Getting Started
+Then press **⌘R**.
 
-**⚠️ IMPORTANT**: This is NOT a Swift Package. You must create a proper Xcode macOS App project.
+## The window
 
-See **[SETUP_INSTRUCTIONS.md](SETUP_INSTRUCTIONS.md)** for detailed setup steps.
+| Pane | Width | What it does |
+| --- | --- | --- |
+| **Sidebar** | 250 | New Post menu, collections (All / Threads / Media / Links / Unpublished) with live counts, collapsible tag list |
+| **Timeline** | 400 | Search field, scrollable post cards showing type, excerpt, tags, block/media counts |
+| **Editor** | 800 | Publish toggle, slug, relative edit time, tag editor, delete — plus the editor for the post's type |
 
-### Quick Start
+## Post types
 
-1. Open Xcode
-2. Create New Project → macOS → App
-3. Configure: SwiftUI + SwiftData
-4. Delete auto-generated files
-5. Drag source files into Xcode
-6. Build and Run (⌘R)
+The type is **inferred from content** (`Post.displayType`), so a post reshapes itself as you
+work. A freshly created post remembers the type you asked for until content decides otherwise.
 
-## 📁 Project Structure
+- **Thread** — 2–4 text blocks
+- **Media Arrangement** — 1–4 images in a grid, with a double-width feature tile
+- **Short + Image** — one block of text beside one image
+- **Video Clip** — one video (poster frame + duration) with a caption
+- **Link Card** — URL, fetched preview, and a line of your own
+
+All five are live: drag files in, or use the picker; assets are copied into the app's
+container so posts never break when the original moves.
+
+## Media handling
+
+`Support/MediaStore.swift` owns everything on disk:
+
+- Drag-and-drop or **Choose File…** for images, video and audio
+- Files are copied to `Application Support/JezBlogMedia/<uuid>.<ext>`
+- QuickLook-quality thumbnails, video poster frames and durations via AVFoundation
+- Alt text per asset (used by the export), plus reorder / replace / remove
+- Deleting an asset also deletes its copied file
+
+## Link previews
+
+`Support/LinkMetadataService.swift` fetches a page and reads Open Graph / Twitter /
+`<title>` tags, filling in the card's title, description and image. The fields stay
+editable — the fetch is a starting point, not the last word.
+
+## Static export
+
+**File ▸ Export Site…** (⇧⌘E) or the toolbar button writes every post with
+`publishToWeb` turned on:
 
 ```
-jez-blog/
-├── Models/
-│   ├── Enums.swift              # Enumerations and structs
-│   ├── Post.swift               # Main post model
-│   ├── ContentBlock.swift       # Text block model
-│   └── MediaAsset.swift         # Media asset model
-├── Views/
-│   ├── MainWindow/
-│   │   ├── ThreePaneView.swift       # Root layout
-│   │   ├── SidebarView.swift         # Collections & tags
-│   │   ├── TimelineView.swift        # Post list
-│   │   ├── DetailContainerView.swift # Editor container
-│   │   └── PostToolbarView.swift     # Toolbar controls
-│   ├── Editors/
-│   │   ├── ThreadComposerView.swift  # ⭐ Main editor
-│   │   ├── MediaArrangementView.swift
-│   │   ├── ShortImageView.swift
-│   │   ├── VideoClipView.swift
-│   │   └── LinkCardView.swift
-│   └── Components/
-│       ├── BlockCardView.swift       # Individual block
-│       ├── PostPreviewRow.swift      # Timeline item
-│       └── TagChipView.swift         # Tag display
-├── Assets.xcassets/
-│   ├── AccentColor.colorset/    # #FF6B35
-│   └── AppIcon.appiconset/
-├── jez_blogApp.swift            # App entry point
-├── SETUP_INSTRUCTIONS.md        # Detailed setup guide
-└── README.md                    # This file
+chosen-folder/
+├── index.html          # the timeline, newest first
+├── style.css           # serif type, system blue accents, dark-mode aware
+├── posts/<slug>.html   # one page per post
+└── media/…             # only the assets those posts use
 ```
 
-## 🎯 Usage
+Slugs come from `webSlug` (or the title), duplicates get a numeric suffix, and missing
+files are skipped and reported rather than failing the whole export.
 
-### Creating Posts
+## Keyboard
 
-1. Click **"New Post"** in the sidebar
-2. Choose post type:
-   - **Thread**: Multi-block text posts
-   - **Media Arrangement**: 2x2 image grid
-   - **Short + Image**: Text with single image
-   - **Video Clip**: Video with caption
-   - **Link Card**: URL with preview
+| Shortcut | Action |
+| --- | --- |
+| ⌘N | New thread |
+| ⇧⌘↩ | Add block to the open thread |
+| ⇧⌘E | Export site |
+| File ▸ New Post of Type | Any of the five types |
 
-### Thread Composer
+## Design tokens
 
-The star feature! Create multi-block text posts:
+Everything visual lives in `JezBlog/Support/Theme.swift`.
 
-- **Add Block**: Click "Add Block" button
-- **Insert Block**: Click "+" between blocks
-- **Reorder**: Hover and use arrow buttons
-- **Delete**: Hover and click trash icon
-- **Character Limit**: Visual counter shows 280 char limit
-- **Auto-save**: Changes save automatically
+- Accent is the **macOS system blue** (`Color.accentColor`, backed by `Assets.xcassets/AccentColor`), so it follows the user's chosen highlight colour
+- Sidebar and toolbar on `.ultraThinMaterial`
+- Cards on `Color.primary.opacity(0.05)`, 12pt continuous corners, hover-reactive shadow
+- Content is `.fontDesign(.serif)`; UI chrome stays system
+- One motion signature: spring `response 0.3, damping 0.8`
 
-### Organizing Posts
+## Layout
 
-- **Search**: Type in timeline search bar
-- **Filter by Collection**: Click collections in sidebar
-- **Filter by Tag**: Click tags in sidebar
-- **Publish**: Toggle "Publish to Web" in toolbar
-- **Delete**: Click delete button in toolbar
-
-## 🛠️ Technical Details
-
-### Requirements
-- macOS 14.0+
-- Xcode 15.0+
-- Swift 5.9+
-
-### Key Technologies
-- **SwiftUI**: Native UI framework
-- **SwiftData**: Persistence layer
-- **NavigationSplitView**: Three-pane layout
-- **@Model**: SwiftData models
-- **@Query**: Reactive data queries
-- **@Relationship**: Model relationships
-
-### Design Patterns
-- **MVVM**: Model-View-ViewModel architecture
-- **Computed Properties**: Dynamic display type detection
-- **Cascade Delete**: Automatic cleanup of relationships
-- **Reactive Updates**: SwiftData auto-updates views
-
-## 🎨 Customization
-
-### Accent Color
-Edit `Assets.xcassets/AccentColor.colorset/Contents.json`:
-```json
-"red" : "1.000",
-"green" : "0.420",
-"blue" : "0.208"
+```
+JezBlog/
+├── JezBlogApp.swift              # @main, ModelContainer, ⌘N / ⇧⌘E commands
+├── Models/                       # Post, ContentBlock, MediaAsset, Enums
+├── Support/
+│   ├── Theme.swift               # colors, motion, CardSurface, DropZone
+│   ├── MediaStore.swift          # import, thumbnails, durations, deletion
+│   ├── LinkMetadataService.swift # Open Graph / Twitter card scraping
+│   └── SiteExporter.swift        # static HTML + CSS + media
+└── Views/
+    ├── ThreePaneView.swift       # NavigationSplitView, filtering, export
+    ├── SidebarView / TimelineView / PostPreviewRow / TagChipView
+    ├── DetailContainerView / PostToolbarView / EmptyStateView
+    └── Editors/
+        ├── ThreadComposerView.swift + BlockCardView.swift
+        ├── MediaSlotView.swift   # shared drop target + thumbnail tile
+        └── MediaArrangementView / ShortImageView / VideoClipView / LinkCardView
 ```
 
-### Character Limits
-Edit `ContentBlock.swift`:
-```swift
-characterLimit: Int? = 280  // Change default limit
-```
+Data persists automatically to a SwiftData store in the app's sandbox container.
 
-### Window Size
-Edit `jez_blogApp.swift`:
-```swift
-.defaultSize(width: 1400, height: 900)  // Adjust size
-```
+## Next
 
-## 🐛 Troubleshooting
-
-See **[SETUP_INSTRUCTIONS.md](SETUP_INSTRUCTIONS.md)** for detailed troubleshooting.
-
-Common issues:
-- **No window appears**: You created a Swift Package instead of macOS App
-- **Build errors**: Files not added to target
-- **Data not persisting**: Check SwiftData configuration
-
-## 🚧 Future Enhancements
-
-- [ ] Implement media upload/handling
-- [ ] Add tag management UI
-- [ ] Build actual web publishing
-- [ ] Add CloudKit sync
-- [ ] Export to various formats
-- [ ] Rich text formatting
-- [ ] Image editing tools
-- [ ] Video trimming
-- [ ] Link preview fetching
-- [ ] Keyboard shortcuts
-- [ ] Dark mode optimization
-- [ ] Accessibility improvements
-
-## 📝 License
-
-This project is provided as-is for personal use and learning.
-
-## 🙏 Acknowledgments
-
-Built with lessons learned from previous attempts. Key insights:
-- ✅ Use Xcode macOS App projects, not Swift Packages
-- ✅ Include all three parameters in `.navigationSplitViewColumnWidth()`
-- ✅ Avoid problematic window modifiers like `.windowStyle(.hiddenTitleBar)`
-- ✅ Focus on making the Thread Composer feel amazing
-
----
-
-**Happy blogging! 🌱**
+CloudKit sync for the `cloudKitRecordID` fields, richer grid spans in the media
+arrangement, and an export theme picker.
