@@ -1,9 +1,9 @@
 # jez-blog
 
-A native macOS **media garden** — a calm, three-pane place to grow personal posts.
-Built with SwiftUI + SwiftData for macOS 14+.
+A native **media garden** — a calm, three-pane place to grow personal posts.
+Built with SwiftUI + SwiftData for macOS 14+ and iOS 17+.
 
-![type](https://img.shields.io/badge/platform-macOS%2014%2B-black) ![swift](https://img.shields.io/badge/Swift-5.9-orange)
+![type](https://img.shields.io/badge/platform-macOS%2014%2B%20%7C%20iOS%2017%2B-black) ![swift](https://img.shields.io/badge/Swift-5.9-orange)
 
 ## Open it
 
@@ -40,7 +40,7 @@ container so posts never break when the original moves.
 `Support/MediaStore.swift` owns everything on disk:
 
 - Drag-and-drop or **Choose File…** for images, video and audio
-- Files are copied to `Application Support/JezBlogMedia/<uuid>.<ext>`
+- Files are copied to the shared App Group container for cross-platform access
 - QuickLook-quality thumbnails, video poster frames and durations via AVFoundation
 - Alt text per asset (used by the export), plus reorder / replace / remove
 - Deleting an asset also deletes its copied file
@@ -80,7 +80,7 @@ files are skipped and reported rather than failing the whole export.
 
 Everything visual lives in `JezBlog/Support/Theme.swift`.
 
-- Accent is the **macOS system blue** (`Color.accentColor`, backed by `Assets.xcassets/AccentColor`), so it follows the user's chosen highlight colour
+- Accent is the **system blue** (`Color.accentColor`, backed by `Assets.xcassets/AccentColor`), so it follows the user's chosen highlight colour
 - Sidebar and toolbar on `.ultraThinMaterial`
 - Cards on `Color.primary.opacity(0.05)`, 12pt continuous corners, hover-reactive shadow
 - Content is `.fontDesign(.serif)`; UI chrome stays system
@@ -93,6 +93,7 @@ JezBlog/
 ├── JezBlogApp.swift              # @main, ModelContainer, ⌘N / ⇧⌘E commands
 ├── Models/                       # Post, ContentBlock, MediaAsset, Enums
 ├── Support/
+│   ├── PlatformCompat.swift      # Cross-platform compatibility layer
 │   ├── Theme.swift               # colors, motion, CardSurface, DropZone
 │   ├── MediaStore.swift          # import, thumbnails, durations, deletion
 │   ├── LinkMetadataService.swift # Open Graph / Twitter card scraping
@@ -107,9 +108,81 @@ JezBlog/
         └── MediaArrangementView / ShortImageView / VideoClipView / LinkCardView
 ```
 
-Data persists automatically to a SwiftData store in the app's sandbox container.
+Data persists automatically to a SwiftData store in the shared App Group container,
+enabling seamless data sharing between macOS and iOS.
+
+## Cross-Platform Support
+
+JezBlog now supports both macOS and iOS with shared data via App Groups:
+
+- **Shared Container**: Data is stored in `group.com.jezblog.shared`
+- **SwiftData**: Both platforms use the same database file
+- **Media**: Imported media is accessible on both platforms
+- **PlatformCompat.swift**: Handles platform-specific differences
+
+## TestFlight Preparation
+
+To prepare the app for TestFlight distribution:
+
+### 1. App Store Connect Setup
+
+1. Go to [App Store Connect](https://appstoreconnect.apple.com)
+2. Create a new app with:
+   - **Bundle ID**: `com.jezblog.app` (must match your project)
+   - **Platform**: iOS and/or macOS
+   - **App Group**: `group.com.jezblog.shared`
+
+### 2. Configure App Groups
+
+1. In your Apple Developer account, go to **Identifiers** > **App Groups**
+2. Create an App Group with ID: `group.com.jezblog.shared`
+3. Add this App Group to both your macOS and iOS App IDs
+
+### 3. Update Project Settings
+
+1. Open `JezBlog.xcodeproj` in Xcode
+2. Select the JezBlog target
+3. Go to **Signing & Capabilities**:
+   - Set your **Team**
+   - Set **Bundle Identifier**: `com.jezblog.app`
+   - Enable **App Groups** capability
+   - Select `group.com.jezblog.shared`
+
+### 4. Build and Archive
+
+```bash
+# For iOS
+xcodebuild -project JezBlog.xcodeproj -scheme JezBlog -destination 'generic/platform=iOS' archive -archivePath build/JezBlog-iOS.xcarchive
+
+# For macOS
+xcodebuild -project JezBlog.xcodeproj -scheme JezBlog -destination 'generic/platform=macOS' archive -archivePath build/JezBlog-macOS.xcarchive
+```
+
+### 5. Upload to App Store Connect
+
+1. Open Xcode
+2. Go to **Window** > **Organizer**
+3. Select your archive
+4. Click **Distribute App**
+5. Choose **App Store Connect** > **Upload**
+6. Select **TestFlight & App Store**
+
+### 6. Configure TestFlight
+
+1. In App Store Connect, go to your app
+2. Select **TestFlight** tab
+3. Add internal or external testers
+4. The build will appear once processing is complete
+
+## Known Limitations
+
+- **macOS**: Uses NSOpenPanel for export folder selection
+- **iOS**: Exports to Documents folder with share sheet
+- **Drag & Drop**: macOS supports file drag; iOS uses photo picker
 
 ## Next
 
-CloudKit sync for the `cloudKitRecordID` fields, richer grid spans in the media
-arrangement, and an export theme picker.
+- CloudKit sync for the `cloudKitRecordID` fields
+- Richer grid spans in the media arrangement
+- Export theme picker
+- iPad-optimized UI with multi-window support
