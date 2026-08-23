@@ -6,6 +6,8 @@
 //  zoomed into, or handed off to Preview / Finder.
 //
 
+#if canImport(AppKit)
+
 import AVKit
 import AppKit
 import SwiftUI
@@ -285,3 +287,41 @@ struct MediaPreviewView: View {
         isLoading = false
     }
 }
+
+#else
+
+// MARK: - iOS Stub
+
+import SwiftUI
+
+/// Stub for iOS - media preview windows don't exist on iOS
+struct MediaPreviewItem: Identifiable {
+    let id = UUID()
+    let path: String
+    let kind: AssetType
+    let title: String
+    let subtitle: String?
+    
+    init(path: String, kind: AssetType, title: String, subtitle: String? = nil) {
+        self.path = path
+        self.kind = kind
+        self.title = title
+        self.subtitle = subtitle
+    }
+    
+    init?(asset: MediaAsset) {
+        return nil // Not supported on iOS
+    }
+}
+
+@MainActor
+final class MediaPreviewWindowController {
+    static func show(asset: MediaAsset) {
+        // No-op on iOS
+    }
+    static func show(_ item: MediaPreviewItem) {
+        // No-op on iOS
+    }
+}
+
+#endif
