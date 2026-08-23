@@ -157,7 +157,7 @@ struct MediaArrangementView: View {
             Text(text)
             Spacer()
             Button("Dismiss") { withAnimation(Theme.hover) { message = nil } }
-                .buttonStyle(.link)
+                .buttonStyle(.borderless)
         }
         .font(.caption)
         .foregroundStyle(.secondary)

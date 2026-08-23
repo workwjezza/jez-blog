@@ -102,7 +102,7 @@ struct AdaptiveContainerView: View {
                     isEditingNewBlock = false
                     newBlockText = ""
                 }
-                .buttonStyle(.link)
+                .buttonStyle(.borderless)
                 
                 Button("Add") {
                     commitNewBlockAtTop()

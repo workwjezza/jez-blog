@@ -66,7 +66,7 @@ struct LinkCardView: View {
                     Text(verbatim: messageText)
                     Spacer()
                     Button("Dismiss") { withAnimation(Theme.hover) { message = nil } }
-                        .buttonStyle(.link)
+                        .buttonStyle(.borderless)
                 }
                 .font(.caption)
                 .foregroundStyle(.secondary)
@@ -142,7 +142,7 @@ struct LinkCardView: View {
 
                     if let url = asset.url {
                         Button("Open") { openURL(url) }
-                            .buttonStyle(.link)
+                            .buttonStyle(.borderless)
                             .font(.caption)
                     }
 
@@ -152,7 +152,7 @@ struct LinkCardView: View {
                     } label: {
                         Text("Remove")
                     }
-                    .buttonStyle(.link)
+                    .buttonStyle(.borderless)
                     .font(.caption)
                 }
             }

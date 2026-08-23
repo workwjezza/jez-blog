@@ -125,12 +125,12 @@ struct VideoClipView: View {
                             .onSubmit { commitRename(clip) }
                         
                         Button("Save") { commitRename(clip) }
-                            .buttonStyle(.link)
+                            .buttonStyle(.borderless)
                         Button("Cancel") {
                             isRenamingFile = false
                             renameText = ""
                         }
-                        .buttonStyle(.link)
+                        .buttonStyle(.borderless)
                     }
                 } else {
                     Label(clip.displayName, systemImage: "film")
@@ -156,7 +156,7 @@ struct VideoClipView: View {
                         Button("Show in Finder") {
                             NSWorkspace.shared.activateFileViewerSelecting([url])
                         }
-                        .buttonStyle(.link)
+                        .buttonStyle(.borderless)
                     }
                     #endif
                 }
