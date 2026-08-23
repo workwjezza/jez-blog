@@ -84,20 +84,8 @@ struct DetailContainerView: View {
 
     @ViewBuilder
     private func editor(for post: Post) -> some View {
-        switch post.displayType {
-        case .thread:
-            ThreadComposerView(post: post)
-        case .mediaArrangement:
-            MediaArrangementView(post: post)
-        case .shortWithImage:
-            ShortImageView(post: post)
-        case .videoClip:
-            VideoClipView(post: post)
-        case .linkCard:
-            LinkCardView(post: post)
-        case .singlePost:
-            SinglePostView(post: post)
-        }
+        // Use AdaptiveContainerView for all posts - it handles mixed content
+        AdaptiveContainerView(post: post)
     }
 
     // MARK: - Drops

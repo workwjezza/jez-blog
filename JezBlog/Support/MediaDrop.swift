@@ -254,22 +254,16 @@ enum MediaDropRouter {
     static let imageLimit = 25
 
     /// Everything a brand new post could be made from.
-    static let creationKinds: Set<AssetType> = [.image, .video]
+    static let creationKinds: Set<AssetType> = [.image, .video, .audio]
 
     /// What the open post is willing to take.
+    /// With adaptive containers, any post can accept any media type.
     static func acceptedKinds(for post: Post?) -> Set<AssetType> {
         guard let post else { return creationKinds }
-
-        switch post.displayType {
-        case .mediaArrangement, .shortWithImage:
-            return [.image]
-        case .videoClip:
-            return [.video]
-        case .thread:
-            return creationKinds
-        case .linkCard, .singlePost:
-            return []
-        }
+        
+        // Adaptive containers allow all media types in any post
+        // Links are handled separately via URL pasting, not file drops
+        return [.image, .video, .audio]
     }
 
     /// The wording shown while a drag hovers.
@@ -284,6 +278,7 @@ enum MediaDropRouter {
 
     /// Files the dropped URLs into `post`. Returns a message when something
     /// could not be imported.
+    /// With adaptive containers, media is added at the beginning (reverse chronological).
     @discardableResult
     static func handle(_ urls: [URL], post: Post, context: ModelContext) -> String? {
         let accepted = acceptedKinds(for: post)
@@ -291,24 +286,36 @@ enum MediaDropRouter {
 
         let images = urls.filter { MediaStore.assetType(for: $0) == .image }
         let videos = urls.filter { MediaStore.assetType(for: $0) == .video }
+        let audio = urls.filter { MediaStore.assetType(for: $0) == .audio }
 
+        var messages: [String] = []
+
+        // Handle images - add to beginning (reverse chronological)
         if accepted.contains(.image), !images.isEmpty {
             let room = imageLimit - editor.count(of: .image)
-            guard room > 0 else { return "This post already holds \(imageLimit) images." }
-
-            // A single image landing in an empty single-image post replaces it.
-            if post.displayType == .shortWithImage, editor.count(of: .image) == 1, images.count == 1 {
-                return editor.replaceSingle(kind: .image, with: images)
+            guard room > 0 else { 
+                messages.append("This post already holds \(imageLimit) images.")
+                return messages.first
             }
-            return editor.importFiles(images, kind: .image, limit: room)
+            let result = editor.importFilesAtBeginning(images, kind: .image, limit: room)
+            if let result = result { messages.append(result) }
         }
 
+        // Handle videos - add to beginning
         if accepted.contains(.video), !videos.isEmpty {
-            return editor.replaceSingle(kind: .video, with: videos)
+            let result = editor.importFilesAtBeginning(videos, kind: .video, limit: 1)
+            if let result = result { messages.append(result) }
         }
 
-        if accepted.isEmpty { return "A link card holds a link, not a file." }
-        return "Nothing here fits this post."
+        // Handle audio - add to beginning
+        if accepted.contains(.audio), !audio.isEmpty {
+            let result = editor.importFilesAtBeginning(audio, kind: .audio, limit: 10)
+            if let result = result { messages.append(result) }
+        }
+
+        if accepted.isEmpty { return "This post cannot accept files." }
+        if messages.isEmpty { return nil }
+        return messages.first
     }
 
     /// The post type that best suits a set of dropped files.

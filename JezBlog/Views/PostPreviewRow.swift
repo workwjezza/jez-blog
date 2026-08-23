@@ -31,6 +31,18 @@ struct PostPreviewRow: View {
         post.sortedAssets.first { $0.assetType == .linkPreview }
     }
 
+    /// Responsive content type icons showing what's in the post
+    private var contentTypeIcons: some View {
+        let icons = post.contentTypeIcons
+        return HStack(spacing: 4) {
+            ForEach(icons, id: \.self) { iconName in
+                Image(systemName: iconName)
+                    .font(.caption)
+                    .foregroundStyle(Theme.accent)
+            }
+        }
+    }
+
     var body: some View {
         Button(action: handleClick) {
             HStack(alignment: .top, spacing: 12) {
@@ -50,13 +62,8 @@ struct PostPreviewRow: View {
 
                 VStack(alignment: .leading, spacing: 8) {
                     HStack(spacing: 6) {
-                        Image(systemName: post.displayType.symbolName)
-                            .font(.caption)
-                            .foregroundStyle(Theme.accent)
-
-                        Text(post.displayType.label)
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
+                        // Responsive content type icons
+                        contentTypeIcons
 
                         Spacer()
 
@@ -109,16 +116,11 @@ struct PostPreviewRow: View {
                         }
                     }
 
-                    HStack(spacing: 10) {
-                        if let blockCount = post.blocks?.count, blockCount > 0 {
-                            Label("\(blockCount)", systemImage: "square.stack.3d.up")
-                        }
-                        if let mediaCount = post.mediaAssets?.count, mediaCount > 0 {
-                            Label("\(mediaCount)", systemImage: "paperclip")
-                        }
-                    }
-                    .font(.caption2)
-                    .foregroundStyle(.tertiary)
+                    // Content type summary
+                    Text(post.contentTypeSummary)
+                        .font(.caption2)
+                        .foregroundStyle(.tertiary)
+                        .lineLimit(1)
                 }
             }
             .padding(Theme.cardPadding)
@@ -238,23 +240,20 @@ struct PostPreviewRow: View {
         clickCount += 1
 
         if clickCount == 1 {
-            // Single click - select
-            clickTimer = Timer.scheduledTimer(withTimeInterval: 0.3, repeats: false) { _ in
+            // Single click - select with smooth animation
+            clickTimer = Timer.scheduledTimer(withTimeInterval: 0.25, repeats: false) { _ in
                 if clickCount == 1 {
-                    onSelect()
+                    withAnimation(Theme.selection) {
+                        onSelect()
+                    }
                 }
                 clickCount = 0
             }
         } else if clickCount == 2 {
-            // Double click - edit title for media posts
+            // Double click - pop out to window
             clickTimer?.invalidate()
-            if post.displayType == .shortWithImage ||
-               post.displayType == .mediaArrangement ||
-               post.displayType == .videoClip {
-                isEditingTitle = true
-                editedTitle = post.previewTitle
-            } else {
-                onSelect()
+            withAnimation(Theme.windowAppear) {
+                PostPreviewWindowController.show(post: post, context: modelContext)
             }
             clickCount = 0
         }

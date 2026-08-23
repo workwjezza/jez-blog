@@ -4,8 +4,10 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct TimelineView: View {
+    @Environment(\.modelContext) private var modelContext
     let posts: [Post]
     @Binding var selectedPost: Post?
     let collectionTitle: String
@@ -55,7 +57,7 @@ struct TimelineView: View {
                             post: post,
                             isSelected: selectedPost?.id == post.id
                         ) {
-                            withAnimation(Theme.spring) {
+                            withAnimation(Theme.selection) {
                                 selectedPost = post
                             }
                         }
@@ -72,6 +74,10 @@ struct TimelineView: View {
             }
             .onKeyPress(.downArrow) {
                 navigate(direction: 1, proxy: proxy)
+                return .handled
+            }
+            .onKeyPress(.return) {
+                openSelectedInWindow()
                 return .handled
             }
             .onKeyPress(.home) {
@@ -100,7 +106,7 @@ struct TimelineView: View {
         guard newIndex >= 0 && newIndex < posts.count else { return }
 
         let newPost = posts[newIndex]
-        withAnimation(Theme.spring) {
+        withAnimation(Theme.selection) {
             selectedPost = newPost
         }
         proxy.scrollTo(newPost.id, anchor: .center)
@@ -108,7 +114,7 @@ struct TimelineView: View {
 
     private func navigateToFirst(proxy: ScrollViewProxy) {
         guard let first = posts.first else { return }
-        withAnimation(Theme.spring) {
+        withAnimation(Theme.selection) {
             selectedPost = first
         }
         proxy.scrollTo(first.id, anchor: .center)
@@ -116,10 +122,17 @@ struct TimelineView: View {
 
     private func navigateToLast(proxy: ScrollViewProxy) {
         guard let last = posts.last else { return }
-        withAnimation(Theme.spring) {
+        withAnimation(Theme.selection) {
             selectedPost = last
         }
         proxy.scrollTo(last.id, anchor: .center)
+    }
+
+    private func openSelectedInWindow() {
+        guard let post = selectedPost else { return }
+        withAnimation(Theme.windowAppear) {
+            PostPreviewWindowController.show(post: post, context: modelContext)
+        }
     }
 
     private var emptyState: some View {

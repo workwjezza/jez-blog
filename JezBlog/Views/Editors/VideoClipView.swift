@@ -98,7 +98,7 @@ struct VideoClipView: View {
                     }
                     .foregroundStyle(.white.opacity(0.7))
                 } else if let player {
-                    VideoPlayer(player: player)
+                    StableVideoPlayer(player: player)
                 } else {
                     ProgressView()
                         .controlSize(.small)

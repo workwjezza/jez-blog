@@ -154,7 +154,7 @@ struct MediaPreviewView: View {
     @ViewBuilder
     private var videoStage: some View {
         if let player {
-            VideoPlayer(player: player)
+            StableVideoPlayer(player: player)
         } else if isLoading {
             ProgressView()
                 .controlSize(.small)

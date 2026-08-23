@@ -40,6 +40,10 @@
 		BF0000000000000000000039 /* SinglePostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FR0000000000000000000039 /* SinglePostView.swift */; };
 		BF0000000000000000000040 /* Folder.swift in Sources */ = {isa = PBXBuildFile; fileRef = FR0000000000000000000040 /* Folder.swift */; };
 		BF0000000000000000000041 /* FolderSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FR0000000000000000000041 /* FolderSectionView.swift */; };
+		BF0000000000000000000042 /* StableVideoPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FR0000000000000000000042 /* StableVideoPlayer.swift */; };
+		BF0000000000000000000050 /* ContentItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FR0000000000000000000050 /* ContentItem.swift */; };
+		BF0000000000000000000051 /* AdaptiveContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FR0000000000000000000051 /* AdaptiveContainerView.swift */; };
+		BF0000000000000000000052 /* PostPreviewWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = FR0000000000000000000052 /* PostPreviewWindow.swift */; };
 /* End PBXBuildFile section */
 
 
@@ -81,6 +85,10 @@
 		FR0000000000000000000039 /* SinglePostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SinglePostView.swift; sourceTree = "<group>"; };
 		FR0000000000000000000040 /* Folder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Folder.swift; sourceTree = "<group>"; };
 		FR0000000000000000000041 /* FolderSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderSectionView.swift; sourceTree = "<group>"; };
+		FR0000000000000000000042 /* StableVideoPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StableVideoPlayer.swift; sourceTree = "<group>"; };
+		FR0000000000000000000050 /* ContentItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentItem.swift; sourceTree = "<group>"; };
+		FR0000000000000000000051 /* AdaptiveContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdaptiveContainerView.swift; sourceTree = "<group>"; };
+		FR0000000000000000000052 /* PostPreviewWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostPreviewWindow.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 
@@ -134,6 +142,7 @@
 				FR0000000000000000000004 /* ContentBlock.swift */,
 				FR0000000000000000000005 /* MediaAsset.swift */,
 				FR0000000000000000000040 /* Folder.swift */,
+				FR0000000000000000000050 /* ContentItem.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -153,6 +162,8 @@
 				FR0000000000000000000036 /* MediaGalleryView.swift */,
 				FR0000000000000000000037 /* MediaPreviewWindow.swift */,
 				FR0000000000000000000041 /* FolderSectionView.swift */,
+				FR0000000000000000000042 /* StableVideoPlayer.swift */,
+				FR0000000000000000000052 /* PostPreviewWindow.swift */,
 				GR0000000000000000000006 /* Editors */,
 
 
@@ -172,9 +183,9 @@
 				FR0000000000000000000039 /* SinglePostView.swift */,
 				FR0000000000000000000033 /* MediaSlotView.swift */,
 				FR0000000000000000000038 /* CaptionCardView.swift */,
+				FR0000000000000000000051 /* AdaptiveContainerView.swift */,
 			);
 			path = Editors;
-
 			sourceTree = "<group>";
 		};
 		GR0000000000000000000007 /* Support */ = {
@@ -291,6 +302,10 @@
 				BF0000000000000000000039 /* SinglePostView.swift in Sources */,
 				BF0000000000000000000040 /* Folder.swift in Sources */,
 				BF0000000000000000000041 /* FolderSectionView.swift in Sources */,
+				BF0000000000000000000042 /* StableVideoPlayer.swift in Sources */,
+				BF0000000000000000000050 /* ContentItem.swift in Sources */,
+				BF0000000000000000000051 /* AdaptiveContainerView.swift in Sources */,
+				BF0000000000000000000052 /* PostPreviewWindow.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 

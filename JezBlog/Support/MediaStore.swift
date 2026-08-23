@@ -232,7 +232,7 @@ struct MediaEditor {
         post.sortedAssets.filter { $0.assetType == kind }.count
     }
 
-    /// Imports up to `limit` files. Returns a message when something went wrong.
+    /// Imports up to `limit` files at the end. Returns a message when something went wrong.
     @discardableResult
     func importFiles(_ urls: [URL], kind: AssetType, limit: Int = .max) -> String? {
         guard limit > 0 else { return "There is no room for another \(kind.rawValue)." }
@@ -270,6 +270,57 @@ struct MediaEditor {
             }
         }
 
+        if let failure = failures.first { return failure }
+        if urls.count > limit { return "Only \(limit) more file\(limit == 1 ? "" : "s") fit here." }
+        return nil
+    }
+    
+    /// Imports files at the beginning (reverse chronological order).
+    /// Shifts existing items to make room for new items at the top.
+    @discardableResult
+    func importFilesAtBeginning(_ urls: [URL], kind: AssetType, limit: Int = .max) -> String? {
+        guard limit > 0 else { return "There is no room for another \(kind.rawValue)." }
+        
+        var failures: [String] = []
+        var imported: [MediaAsset] = []
+        let itemsToImport = Array(urls.prefix(limit))
+        
+        // Shift existing assets to make room at the beginning
+        let existingAssets = post.sortedAssets
+        for asset in existingAssets {
+            asset.orderIndex += itemsToImport.count
+        }
+        
+        // Import new files at the beginning
+        for (index, url) in itemsToImport.enumerated() {
+            do {
+                let path = try MediaStore.importFile(at: url, expecting: kind)
+                let asset = MediaAsset(
+                    orderIndex: index,  // Position at the beginning
+                    assetType: kind,
+                    localPath: path
+                )
+                context.insert(asset)
+                imported.append(asset)
+            } catch {
+                failures.append(error.localizedDescription)
+            }
+        }
+        
+        if !imported.isEmpty {
+            withAnimation(Theme.spring) {
+                var updated = post.mediaAssets ?? []
+                updated.append(contentsOf: imported)
+                post.mediaAssets = updated
+                post.touch()
+            }
+            
+            if kind == .video || kind == .audio {
+                let assets = imported
+                Task { for asset in assets { await loadDuration(for: asset) } }
+            }
+        }
+        
         if let failure = failures.first { return failure }
         if urls.count > limit { return "Only \(limit) more file\(limit == 1 ? "" : "s") fit here." }
         return nil

@@ -70,16 +70,23 @@ enum Theme {
     // MARK: Motion
 
     /// The signature spring used for every structural change.
-    static let spring = Animation.spring(response: 0.3, dampingFraction: 0.8)
+    /// Softer, more buttery animation with lower damping for gentle settling.
+    static let spring = Animation.spring(response: 0.45, dampingFraction: 0.75)
 
-    /// Quick fade for hover affordances.
-    static let hover = Animation.easeInOut(duration: 0.2)
+    /// Smooth hover transitions.
+    static let hover = Animation.easeInOut(duration: 0.25)
 
     /// Cards scale + fade in and out.
     static let cardTransition = AnyTransition.asymmetric(
-        insertion: .scale(scale: 0.95).combined(with: .opacity),
-        removal: .scale(scale: 0.95).combined(with: .opacity)
+        insertion: .scale(scale: 0.96).combined(with: .opacity),
+        removal: .scale(scale: 0.96).combined(with: .opacity)
     )
+
+    /// Extra smooth spring for selections and highlights.
+    static let selection = Animation.spring(response: 0.35, dampingFraction: 0.85)
+
+    /// Gentle pop animation for window appearances.
+    static let windowAppear = Animation.spring(response: 0.4, dampingFraction: 0.7)
 }
 
 // MARK: - Reusable styling
