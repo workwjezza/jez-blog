@@ -28,8 +28,7 @@ struct JezBlogApp: App {
         let configuration = ModelConfiguration(
             "JezBlogStore",
             schema: schema,
-            url: sharedURL,
-            isStoredInMemoryOnly: false
+            url: sharedURL
         )
 
         do {

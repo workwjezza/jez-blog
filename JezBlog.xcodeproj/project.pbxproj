@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		BF0000000000000000000001 /* JezBlogApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FR0000000000000000000001 /* JezBlogApp.swift */; };
-		BF0000000000000000000100 /* PlatformCompat.swift in Sources */ = {isa = PBXBuildFile; fileRef = FR0000000000000000000100 /* PlatformCompat.swift */; };
 		BF0000000000000000000002 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = FR0000000000000000000002 /* Enums.swift */; };
 		BF0000000000000000000003 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = FR0000000000000000000003 /* Post.swift */; };
 		BF0000000000000000000004 /* ContentBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = FR0000000000000000000004 /* ContentBlock.swift */; };
@@ -45,9 +44,8 @@
 		BF0000000000000000000050 /* ContentItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FR0000000000000000000050 /* ContentItem.swift */; };
 		BF0000000000000000000051 /* AdaptiveContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FR0000000000000000000051 /* AdaptiveContainerView.swift */; };
 		BF0000000000000000000052 /* PostPreviewWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = FR0000000000000000000052 /* PostPreviewWindow.swift */; };
+		BF0000000000000000000100 /* PlatformCompat.swift in Sources */ = {isa = PBXBuildFile; fileRef = FR0000000000000000000100 /* PlatformCompat.swift */; };
 /* End PBXBuildFile section */
-
-
 
 /* Begin PBXFileReference section */
 		FR0000000000000000000000 /* JezBlog.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JezBlog.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -92,8 +90,6 @@
 		FR0000000000000000000052 /* PostPreviewWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostPreviewWindow.swift; sourceTree = "<group>"; };
 		FR0000000000000000000100 /* PlatformCompat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlatformCompat.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
-
-
 
 /* Begin PBXFrameworksBuildPhase section */
 		PH0000000000000000000001 /* Frameworks */ = {
@@ -167,8 +163,6 @@
 				FR0000000000000000000042 /* StableVideoPlayer.swift */,
 				FR0000000000000000000052 /* PostPreviewWindow.swift */,
 				GR0000000000000000000006 /* Editors */,
-
-
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -311,8 +305,6 @@
 				BF0000000000000000000052 /* PostPreviewWindow.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
-
-
 		};
 /* End PBXSourcesBuildPhase section */
 
@@ -402,7 +394,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = AM3FXP5BXT;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = NO;
@@ -430,7 +422,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = AM3FXP5BXT;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = NO;
