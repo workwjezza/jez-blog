@@ -7,7 +7,9 @@
 //  pops the picture out into its own window.
 //
 
+#if canImport(AppKit)
 import AppKit
+#endif
 import SwiftUI
 import UniformTypeIdentifiers
 
@@ -22,13 +24,24 @@ struct MediaThumbnailView: View {
     /// When true the tile takes the media's own shape, so nothing is cropped.
     var adoptsAspectRatio: Bool = false
 
+    #if canImport(AppKit)
     @State private var image: NSImage?
+    #else
+    @State private var image: UIImage?
+    #endif
     @State private var isLoading = true
 
+    #if canImport(AppKit)
     private var aspectRatio: CGFloat? {
         guard let image, image.size.width > 0, image.size.height > 0 else { return nil }
         return image.size.width / image.size.height
     }
+    #else
+    private var aspectRatio: CGFloat? {
+        guard let image, image.size.width > 0, image.size.height > 0 else { return nil }
+        return image.size.width / image.size.height
+    }
+    #endif
 
     var body: some View {
         Group {
@@ -46,7 +59,11 @@ struct MediaThumbnailView: View {
             let data = await MediaStore.thumbnailData(atPath: path, kind: kind)
             guard !Task.isCancelled else { return }
 
+            #if canImport(AppKit)
             image = data.flatMap(NSImage.init(data:))
+            #else
+            image = data.flatMap(UIImage.init(data:))
+            #endif
             isLoading = false
         }
     }
@@ -56,10 +73,17 @@ struct MediaThumbnailView: View {
             Theme.cardFill
 
             if let image {
+                #if canImport(AppKit)
                 Image(nsImage: image)
                     .resizable()
                     .aspectRatio(contentMode: contentMode)
                     .transition(.opacity)
+                #else
+                Image(uiImage: image)
+                    .resizable()
+                    .aspectRatio(contentMode: contentMode)
+                    .transition(.opacity)
+                #endif
             } else if isLoading {
                 // An integral, fixed frame keeps AppKit from logging
                 // fractional min/max constraint conflicts for the spinner.
@@ -263,12 +287,14 @@ struct MediaSlotView: View {
             }
             .help("Replace")
 
+            #if canImport(AppKit)
             Button {
                 if let url = asset.fileURL { NSWorkspace.shared.activateFileViewerSelecting([url]) }
             } label: {
                 Image(systemName: "folder")
             }
             .help("Show in Finder")
+            #endif
 
             if let onRemove {
                 Button(role: .destructive, action: onRemove) {
