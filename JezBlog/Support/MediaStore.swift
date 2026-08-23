@@ -7,12 +7,17 @@
 //
 
 import AVFoundation
-import AppKit
 import Foundation
 import ImageIO
 import SwiftData
 import SwiftUI
 import UniformTypeIdentifiers
+#if canImport(AppKit)
+import AppKit
+#endif
+#if canImport(UIKit)
+import UIKit
+#endif
 
 enum MediaStoreError: LocalizedError {
     case unreadable(URL)
@@ -49,13 +54,10 @@ enum MediaStore {
 
     // MARK: - Location
 
-    /// `…/Application Support/JezBlog/Media`
+    /// `…/Shared Container/JezBlog/Media` (uses App Group for cross-platform sharing)
     static var mediaDirectory: URL {
-        let base = FileManager.default
-            .urls(for: .applicationSupportDirectory, in: .userDomainMask).first
-            ?? FileManager.default.temporaryDirectory
+        let base = PlatformCompat.sharedContainerURL
         return base
-            .appendingPathComponent("JezBlog", isDirectory: true)
             .appendingPathComponent("Media", isDirectory: true)
     }
 
@@ -214,7 +216,12 @@ enum MediaStore {
     }
 
     private static func pngData(from image: CGImage) -> Data? {
-        NSBitmapImageRep(cgImage: image).representation(using: .png, properties: [:])
+        #if canImport(AppKit)
+        return NSBitmapImageRep(cgImage: image).representation(using: .png, properties: [:])
+        #else
+        let uiImage = UIImage(cgImage: image)
+        return uiImage.pngData()
+        #endif
     }
 }
 

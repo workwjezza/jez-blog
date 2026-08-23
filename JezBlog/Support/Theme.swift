@@ -46,9 +46,13 @@ enum Theme {
 
     // MARK: Palette
 
-    /// macOS system blue — #007AFF in light, #0A84FF in dark.
+    /// System accent color — #007AFF in light, #0A84FF in dark on macOS/iOS.
     /// Matches `Assets.xcassets/AccentColor` and the platform's own controls.
+    #if canImport(AppKit)
     static let accent = Color(nsColor: .systemBlue)
+    #else
+    static let accent = Color(uiColor: .systemBlue)
+    #endif
 
     /// Soft fill used by cards and drop zones.
     static let cardFill = Color.primary.opacity(0.05)

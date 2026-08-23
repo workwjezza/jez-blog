@@ -5,10 +5,16 @@
 //  Sidebar · Timeline · Editor
 //
 
-import AppKit
-import Combine
 import SwiftData
 import SwiftUI
+import UniformTypeIdentifiers
+#if canImport(AppKit)
+import AppKit
+import Combine
+#endif
+#if canImport(UIKit)
+import UIKit
+#endif
 
 struct ThreePaneView: View {
     @Environment(\.modelContext) private var modelContext
@@ -75,6 +81,7 @@ struct ThreePaneView: View {
             exportSite()
         }
         .alert("Site exported", isPresented: .constant(exportSummary != nil)) {
+            #if os(macOS)
             Button("Show in Finder") {
                 if let destination = exportSummary?.destination {
                     NSWorkspace.shared.activateFileViewerSelecting(
@@ -83,6 +90,7 @@ struct ThreePaneView: View {
                 }
                 exportSummary = nil
             }
+            #endif
             Button("Done", role: .cancel) { exportSummary = nil }
         } message: {
             Text(exportSummary.map(summaryMessage) ?? "")
@@ -213,6 +221,23 @@ struct ThreePaneView: View {
 
     /// Asks for a folder, then writes index.html, the post pages and the media.
     private func exportSite() {
+        #if os(iOS)
+        // On iOS, export to a default location in the app's documents
+        let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        let exportURL = documentsURL.appendingPathComponent("ExportedSite", isDirectory: true)
+        
+        // Remove existing export
+        try? FileManager.default.removeItem(at: exportURL)
+        try? FileManager.default.createDirectory(at: exportURL, withIntermediateDirectories: true)
+        
+        do {
+            exportSummary = try SiteExporter.export(posts: posts, to: exportURL)
+            // On iOS, present share sheet to share the exported files
+            shareExportedSite(url: exportURL)
+        } catch {
+            exportError = error.localizedDescription
+        }
+        #else
         let panel = NSOpenPanel()
         panel.canChooseDirectories = true
         panel.canChooseFiles = false
@@ -228,7 +253,26 @@ struct ThreePaneView: View {
         } catch {
             exportError = error.localizedDescription
         }
+        #endif
     }
+    
+    #if os(iOS)
+    private func shareExportedSite(url: URL) {
+        let activityVC = UIActivityViewController(activityItems: [url], applicationActivities: nil)
+        
+        // Present from the root view controller
+        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+           let rootVC = windowScene.windows.first?.rootViewController {
+            // For iPad
+            if let popover = activityVC.popoverPresentationController {
+                popover.sourceView = rootVC.view
+                popover.sourceRect = CGRect(x: rootVC.view.bounds.midX, y: rootVC.view.bounds.midY, width: 0, height: 0)
+                popover.permittedArrowDirections = []
+            }
+            rootVC.present(activityVC, animated: true)
+        }
+    }
+    #endif
 
     private func summaryMessage(for summary: ExportSummary) -> String {
         var lines = [

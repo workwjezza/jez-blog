@@ -22,14 +22,23 @@ struct JezBlogApp: App {
             Folder.self
         ])
 
+        // Use shared container for cross-platform data sharing
+        let sharedURL = PlatformCompat.sharedContainerURL.appendingPathComponent("JezBlog.store", isDirectory: false)
+        
         let configuration = ModelConfiguration(
             "JezBlogStore",
             schema: schema,
+            url: sharedURL,
             isStoredInMemoryOnly: false
         )
 
         do {
+            // Ensure the directory exists
+            let directory = sharedURL.deletingLastPathComponent()
+            try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+            
             modelContainer = try ModelContainer(for: schema, configurations: [configuration])
+            print("✅ jez-blog: using shared store at \(sharedURL.path)")
         } catch {
             // If the on-disk store cannot be opened (e.g. an incompatible older
             // schema during development) fall back to memory so the app still runs.

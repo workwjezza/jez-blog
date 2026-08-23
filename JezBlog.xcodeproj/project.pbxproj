@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		BF0000000000000000000001 /* JezBlogApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FR0000000000000000000001 /* JezBlogApp.swift */; };
+		BF0000000000000000000100 /* PlatformCompat.swift in Sources */ = {isa = PBXBuildFile; fileRef = FR0000000000000000000100 /* PlatformCompat.swift */; };
 		BF0000000000000000000002 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = FR0000000000000000000002 /* Enums.swift */; };
 		BF0000000000000000000003 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = FR0000000000000000000003 /* Post.swift */; };
 		BF0000000000000000000004 /* ContentBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = FR0000000000000000000004 /* ContentBlock.swift */; };
@@ -89,6 +90,7 @@
 		FR0000000000000000000050 /* ContentItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentItem.swift; sourceTree = "<group>"; };
 		FR0000000000000000000051 /* AdaptiveContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdaptiveContainerView.swift; sourceTree = "<group>"; };
 		FR0000000000000000000052 /* PostPreviewWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostPreviewWindow.swift; sourceTree = "<group>"; };
+		FR0000000000000000000100 /* PlatformCompat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlatformCompat.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 
@@ -191,6 +193,7 @@
 		GR0000000000000000000007 /* Support */ = {
 			isa = PBXGroup;
 			children = (
+				FR0000000000000000000100 /* PlatformCompat.swift */,
 				FR0000000000000000000019 /* Theme.swift */,
 				FR0000000000000000000030 /* MediaStore.swift */,
 				FR0000000000000000000031 /* LinkMetadataService.swift */,
@@ -198,7 +201,6 @@
 				FR0000000000000000000034 /* MediaDrop.swift */,
 			);
 			path = Support;
-
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -271,6 +273,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BF0000000000000000000001 /* JezBlogApp.swift in Sources */,
+				BF0000000000000000000100 /* PlatformCompat.swift in Sources */,
 				BF0000000000000000000002 /* Enums.swift in Sources */,
 				BF0000000000000000000003 /* Post.swift in Sources */,
 				BF0000000000000000000004 /* ContentBlock.swift in Sources */,
