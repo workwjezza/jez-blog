@@ -6,6 +6,11 @@
 import SwiftUI
 import SwiftData
 import UniformTypeIdentifiers
+#if canImport(AppKit)
+import AppKit
+#else
+import UIKit
+#endif
 
 /// A single post as it appears in the timeline.
 struct PostPreviewRow: View {
@@ -221,6 +226,7 @@ struct PostPreviewRow: View {
         }
     }
 
+    #if canImport(AppKit)
     private func copyMediaToClipboard(path: String) {
         let url = URL(fileURLWithPath: path)
         if let image = NSImage(contentsOf: url) {
@@ -235,6 +241,20 @@ struct PostPreviewRow: View {
         pasteboard.clearContents()
         pasteboard.setString(text, forType: .string)
     }
+    #else
+    private func copyMediaToClipboard(path: String) {
+        // iOS: copy image to clipboard
+        let url = URL(fileURLWithPath: path)
+        if let data = try? Data(contentsOf: url),
+           let image = UIImage(data: data) {
+            UIPasteboard.general.image = image
+        }
+    }
+
+    private func copyTextToClipboard(_ text: String) {
+        UIPasteboard.general.string = text
+    }
+    #endif
 
     private func handleClick() {
         clickCount += 1
