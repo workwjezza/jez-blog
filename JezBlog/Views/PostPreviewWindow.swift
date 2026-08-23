@@ -5,6 +5,8 @@
 //  A post popped out into its own window for focused editing or viewing.
 //
 
+#if canImport(AppKit)
+
 import AppKit
 import SwiftUI
 import SwiftData
@@ -139,10 +141,64 @@ struct PostPreviewWindowView: View {
     }
 }
 
+#else
+
+// MARK: - iOS Stubs
+
+import SwiftUI
+import SwiftData
+
+/// Stub for iOS - post preview windows don't exist on iOS
+@MainActor
+final class PostPreviewWindowController {
+    static func show(post: Post, context: ModelContext) {
+        // No-op on iOS - use navigation instead
+    }
+}
+
+/// iOS version of the preview view - shown as a sheet instead
+struct PostPreviewWindowView: View {
+    @Bindable var post: Post
+    let context: ModelContext
+    @Environment(\.dismiss) private var dismiss
+
+    var body: some View {
+        NavigationStack {
+            ScrollView {
+                AdaptiveContainerView(post: post)
+                    .padding(.vertical, Theme.sectionSpacing)
+            }
+            .navigationTitle(post.previewTitle)
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Toggle(isOn: Binding(
+                        get: { post.publishToWeb },
+                        set: { newValue in
+                            withAnimation(Theme.selection) {
+                                post.publishToWeb = newValue
+                                if newValue, post.webSlug == nil {
+                                    post.webSlug = PostToolbarView.slug(from: post.previewTitle)
+                                }
+                                post.touch()
+                            }
+                        }
+                    )) {
+                        Text("Publish")
+                    }
+                    .tint(Theme.accent)
+                }
+            }
+        }
+    }
+}
+
+#endif
+
 // MARK: - Post Preview Row Extension
 
 extension PostPreviewRow {
-    /// Opens this post in a pop-out window.
+    /// Opens this post in a pop-out window (macOS) or sheet (iOS).
     func openInWindow(context: ModelContext) {
         PostPreviewWindowController.show(post: post, context: context)
     }
