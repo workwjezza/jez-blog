@@ -6,7 +6,9 @@
 //
 
 import AVKit
+#if canImport(AppKit)
 import AppKit
+#endif
 import SwiftData
 import SwiftUI
 
@@ -149,12 +151,14 @@ struct VideoClipView: View {
 
                     Spacer()
 
+                    #if canImport(AppKit)
                     if let url = clip.fileURL {
                         Button("Show in Finder") {
                             NSWorkspace.shared.activateFileViewerSelecting([url])
                         }
                         .buttonStyle(.link)
                     }
+                    #endif
                 }
             }
             .font(.caption)
@@ -220,4 +224,3 @@ struct VideoClipView: View {
         renameText = ""
     }
 }
-
