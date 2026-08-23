@@ -10,7 +10,9 @@
 import SwiftData
 import SwiftUI
 import UniformTypeIdentifiers
+#if canImport(AppKit)
 import AppKit
+#endif
 
 // MARK: - Environment
 
@@ -127,8 +129,6 @@ struct MediaDropTarget: ViewModifier {
     private func loadPhotosItem(from provider: NSItemProvider) async -> URL? {
         // Check for videos FIRST since video providers may also have image
         // representations (thumbnails/poster frames) that we'd incorrectly match
-        // Always check for videos first (regardless of kinds) since video 
-        // providers may also have image representations we'd incorrectly match
         for videoType in [UTType.movie, .video, .mpeg4Movie, .quickTimeMovie] {
             if provider.hasItemConformingToTypeIdentifier(videoType.identifier) {
                 if let url = await loadPhotosVideo(from: provider, type: videoType) {
