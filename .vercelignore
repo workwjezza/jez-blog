@@ -1,0 +1,14 @@
+.git
+.vscode
+.astro
+dist
+node_modules
+docs
+tests
+scripts
+JezBlog
+JezBlog.xcodeproj
+TESTFLIGHT_SETUP.md
+.DS_Store
+.env
+.env.*

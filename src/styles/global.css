@@ -1,0 +1,85 @@
+:root {
+  color-scheme: light;
+  --background: #fff;
+  --text: #2e2b23;
+  --muted: #524c3e;
+  --emphasis: #000;
+  --separator: rgb(0 0 0 / 12.5%);
+  --focus: #005fcc;
+  --font: Arial, Helvetica, sans-serif;
+  --content-width: 700px;
+  --gutter: 20px;
+  --space: 13.5px;
+}
+
+* { box-sizing: border-box; }
+html { background: var(--background); -webkit-font-smoothing: antialiased; }
+body { margin: 0; color: var(--text); font: 14px/27px var(--font); }
+h1, h2, h3, h4, h5, h6, p, ul, ol, blockquote, figure { margin: 0; }
+a { color: inherit; text-decoration: underline; }
+a:hover { opacity: .5; }
+a:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; opacity: 1; }
+
+.page {
+  width: min(var(--content-width), calc(100% - var(--gutter) * 2));
+  margin-inline: auto;
+  padding-block: 54px;
+  overflow-wrap: anywhere;
+}
+/* Preserve the reference's asymmetric placement without an empty sidebar. */
+@media (min-width: 1100px) {
+  .page { margin-left: clamp(var(--gutter), calc(100% - 740px), 305px); margin-right: var(--gutter); }
+}
+@media (max-width: 767px) {
+  .page { padding-block: 40.5px; }
+}
+
+.intro { margin-bottom: 40.5px; }
+.intro h1 { font-size: 14px; line-height: 1.6; font-weight: 600; margin-bottom: 12px; }
+.bio { max-width: 620px; line-height: 1.6; margin-bottom: 12px; }
+.social-links { display: flex; flex-wrap: wrap; column-gap: 13.5px; row-gap: 4px; line-height: 1.6; }
+.section-heading { font-size: 14px; line-height: 27px; font-weight: 600; }
+hr { border: 0; border-top: 1px solid var(--separator); margin: 27px 0; }
+
+.experiment-list { list-style: none; padding: 0; margin-top: var(--space); }
+.experiment-list li { display: grid; grid-template-columns: 180px minmax(0, 1fr); padding: 8px 12px; line-height: 1.35; }
+.experiment-list a { align-self: start; justify-self: start; max-width: 100%; padding-right: 12px; }
+.experiment-list p { font-style: italic; }
+.writing-list { list-style: none; padding: 0; margin-top: var(--space); }
+.writing-list li { line-height: 40px; }
+.writing-list a { display: inline-block; max-width: 100%; padding: 5px 12px; line-height: 27px; vertical-align: middle; }
+.writing-list a:hover { color: #fff; background: #000; opacity: .9; }
+@media (max-width: 520px) {
+  .experiment-list li { grid-template-columns: minmax(0, 1fr); gap: 6px; padding: 8px 10px; }
+  .experiment-list a { padding: 0; }
+}
+
+.back-link { display: inline-block; margin-bottom: 27px; color: var(--muted); }
+.post-header h1 { font-size: 24px; line-height: 1.2; font-weight: 600; color: var(--emphasis); }
+.post-header time { display: block; color: var(--muted); margin-top: var(--space); }
+.prose { margin-top: 54px; }
+.prose p, .prose ul, .prose ol, .prose pre, .prose blockquote, .prose figure { margin-bottom: var(--space); }
+.prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6 { color: var(--emphasis); font-weight: 600; }
+.prose h1, .prose h2 { margin: 54px 0 27px; line-height: 1.25; }
+.prose h1 { font-size: 32px; }
+.prose h2 { font-size: 24px; }
+.prose h3 { margin: 27px 0; font-size: 20px; }
+.prose h4, .prose h5, .prose h6 { margin: 27px 0 var(--space); font-size: 14px; }
+.prose > :first-child { margin-top: 0; }
+.prose ul, .prose ol { padding-left: 27px; }
+.prose li { margin-bottom: var(--space); }
+.prose li > ul, .prose li > ol { margin-top: var(--space); }
+.prose blockquote { font-style: italic; line-height: 21px; border-left: 3px solid #ccc; padding-left: 10px; }
+.prose a { color: var(--emphasis); }
+.prose a:hover { background: rgb(0 0 0 / 5%); opacity: 1; }
+.prose code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .93em; }
+.prose pre { white-space: pre-wrap; overflow-wrap: anywhere; padding: var(--space); border: 1px solid var(--separator); line-height: 1.5; }
+.prose img, .prose video, .prose svg { display: block; max-width: 100%; height: auto; }
+.prose iframe { width: 100%; max-width: 100%; border: 0; }
+.prose audio { width: 100%; }
+.prose figcaption { color: var(--muted); font-size: 13px; line-height: 16px; margin-top: 8px; }
+.prose table { width: 100%; table-layout: fixed; border-collapse: collapse; margin-bottom: var(--space); }
+.prose th, .prose td { text-align: left; vertical-align: top; border: 1px solid var(--separator); padding: 8px; }
+@media (max-width: 767px) {
+  .prose { margin-top: 27px; }
+}

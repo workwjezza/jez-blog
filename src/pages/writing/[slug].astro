@@ -1,0 +1,13 @@
+---
+import { render, type CollectionEntry } from 'astro:content';
+import ReadingLayout from '../../layouts/ReadingLayout.astro';
+import { getPublicWriting } from '../../lib/content';
+
+export async function getStaticPaths() {
+  return (await getPublicWriting()).map(entry => ({ params: { slug: entry.data.slug }, props: { entry } }));
+}
+interface Props { entry: CollectionEntry<'writing'>; }
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+---
+<ReadingLayout {...entry.data}><Content /></ReadingLayout>

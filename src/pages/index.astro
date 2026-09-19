@@ -1,0 +1,33 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import { site } from '../config/site';
+import { getPublicExperiments, getPublicWriting } from '../lib/content';
+
+const [experiments, writing] = await Promise.all([getPublicExperiments(), getPublicWriting()]);
+const bio = site.bio.trim();
+---
+<SiteLayout description={bio || undefined}>
+  <header class="intro">
+    <h1>{site.displayName}</h1>
+    {bio && <p class="bio">{bio}</p>}
+    <nav class="social-links" aria-label="Social links">
+      {site.socialLinks.map(link => <a href={link.href}>{link.label}</a>)}
+    </nav>
+  </header>
+  <section aria-labelledby="experiments">
+    <h2 id="experiments" class="section-heading">Experiments:</h2>
+    {experiments.length > 0 && <ul class="experiment-list">
+      {experiments.map(({ data }) => <li>
+        <a href={data.externalUrl ?? `/experiments/${data.slug}/`}>{data.title}</a>
+        {data.description && <p>{data.description}</p>}
+      </li>)}
+    </ul>}
+  </section>
+  <hr />
+  <section aria-labelledby="writing">
+    <h2 id="writing" class="section-heading">Writing:</h2>
+    {writing.length > 0 && <ul class="writing-list">
+      {writing.map(({ data }) => <li><a href={`/writing/${data.slug}/`}>{data.title}</a></li>)}
+    </ul>}
+  </section>
+</SiteLayout>

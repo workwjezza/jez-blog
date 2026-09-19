@@ -1,0 +1,19 @@
+---
+import SiteLayout from './SiteLayout.astro';
+
+interface Props { title: string; publicationDate?: string; description?: string; }
+const { title, publicationDate, description } = Astro.props;
+const formattedDate = publicationDate && new Intl.DateTimeFormat('en', {
+  year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC',
+}).format(new Date(`${publicationDate}T00:00:00Z`));
+---
+<SiteLayout title={title} description={description}>
+  <a class="back-link" href="/">← Back</a>
+  <article>
+    <header class="post-header">
+      <h1>{title}</h1>
+      {publicationDate && <time datetime={publicationDate}>{formattedDate}</time>}
+    </header>
+    <div class="prose"><slot /></div>
+  </article>
+</SiteLayout>
