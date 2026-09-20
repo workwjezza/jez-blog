@@ -1,6 +1,6 @@
 import { defineCollection } from 'astro:content';
 import { markdownLoader } from './lib/markdown-loader';
-import { experimentSchema, writingSchema } from './lib/schemas';
+import { projectSchema, writingSchema, mediaSchema } from './lib/schemas';
 
 // Keep file identities separate from public slugs so duplicates cannot silently overwrite.
 const writing = defineCollection({
@@ -9,7 +9,16 @@ const writing = defineCollection({
 });
 const experiments = defineCollection({
   loader: markdownLoader('./src/content/experiments'),
-  schema: experimentSchema,
+  schema: projectSchema,
 });
 
-export const collections = { writing, experiments };
+const projects = defineCollection({
+  loader: markdownLoader('./src/content/projects'),
+  schema: projectSchema,
+});
+const media = defineCollection({
+  loader: markdownLoader('./src/content/media'),
+  schema: mediaSchema,
+});
+
+export const collections = { writing, projects, experiments, media };

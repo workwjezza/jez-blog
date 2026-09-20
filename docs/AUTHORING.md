@@ -14,35 +14,37 @@ metadata. Design belongs in layouts and the stylesheet, not content frontmatter.
 1. Use the prompt in `docs/CREATOR-PROMPT.md`. Preserve the author's voice; make
    only light edits unless a rewrite is requested. Never invent facts or experiences.
 2. Copy a template from `docs/templates/` into the appropriate directory:
-   `src/content/writing/` or `src/content/experiments/`. Replace all bracketed fields.
+   `src/content/writing/` or `src/content/projects/`. Replace all bracketed fields.
    Do not copy templates into public output or create demonstration entries.
 3. Choose an unused lowercase, hyphen-separated filename and slug. Search existing
    drafts as well as published entries before editing. Duplicate local slugs within
-   a collection fail the build. The two collections have separate route prefixes.
+   a collection fail the build. Writing and Projects have separate route prefixes;
+   legacy Experiments and Projects share one slug namespace.
 4. Keep `draft: true` unless publication is explicitly requested. Omitting `draft`
    also defaults to true. Drafts are excluded even in development; review their
-   Markdown in your editor. There is no browser editor or draft preview route.
+   Markdown in your editor. There is no public draft preview route. The separate
+   local visual editor can build private previews; see `docs/LOCAL-EDITOR.md`.
 5. Run `npm test`, `npm run build`, and `npm run test:build`.
 6. Report the changed file, its draft/publication status, and blocking information.
    Publishing does not authorize deployment.
 
 ## Fields and destinations
 
-Both collections accept `title`, `draft`, optional `description`, optional integer
+Writing and Projects accept `title`, `draft`, optional `description`, optional integer
 `order`, and optional **quoted** `publicationDate: "YYYY-MM-DD"`. Dates must be real
 calendar dates. Lower order numbers appear first. Entries with an explicit order
 precede unordered entries; ties use newest publication date, then slug (or filename
-for external experiments), then filename. Dated entries precede undated entries.
+for external projects), then filename. Dated entries precede undated entries.
 
 Writing requires `slug` and an author-supplied Markdown body. Its route is
 `/writing/<slug>/`. Descriptions are optional page metadata, not a visible subtitle.
 
-Experiments require **exactly one** of:
+Projects require **exactly one** of:
 - `externalUrl`: a full HTTP(S) destination; no local page is generated.
-- `slug`: creates `/experiments/<slug>/`, with an optional Markdown body.
+- `slug`: creates `/projects/<slug>/`, with an optional Markdown body.
 
-Ask if an experiment's intended destination is unclear. Never guess project details.
-Experiment descriptions appear next to titles, stacking on mobile. Homepage lists
+Ask if a project's intended destination is unclear. Never guess project details.
+Project descriptions appear next to titles, stacking on mobile. Homepage lists
 never show publication dates or other metadata. Reading pages show a quiet date only
 when supplied. Add headings starting at `##` beneath the page's automatic title.
 
@@ -55,10 +57,38 @@ updated build is a separate authorized action. Previously deployed copies and
 third-party caches do not disappear simply because a local file changed.
 
 There is no feed or sitemap at launch. If either is added later, use only
-`getPublicWriting()` and `getPublicExperiments()` from `src/lib/content.ts`.
+`getPublicWriting()`, `getPublicProjects()`, and `getPublicMedia()` from `src/lib/content.ts`.
 Never publish `.astro/`, `src/`, `docs/`, or tests; only deploy `dist/`.
 
 ## Markdown and media
+
+### Homepage Media gallery
+
+Use **Media** in the local editor for the low-effort workflow: drop or paste files,
+optionally add descriptions/captions, preview, and publish a batch with one confirmation.
+The editor creates `src/content/media/<automatic-id>.md`; no hand-written template,
+public title, slug entry, or Markdown body is required. Each file stores `createdAt`
+and an ordered `items` array (`src`, `kind`, `alt`, `caption`). Only explicit
+`draft: false` batches appear. Empty published batches are allowed so all tiles can
+be removed in a revision. Images use empty alt text until an author adds a description;
+meaningful images should receive an accurate description rather than a guessed one.
+
+The gallery sits below Writing with 3 columns at >=1100px, 2 at 521–1099px, and 1
+at <=520px. Rows grow automatically; this is not a network infinite-scroll feed.
+Batch ordering is explicit order, newest publication date, newest creation timestamp,
+then file identity. Item array order is preserved within each batch. Images load lazily;
+audio/video have native controls and do not autoplay or preload.
+
+Legacy `src/content/experiments/` files remain supported and are rendered as Projects.
+The old `/experiments/<slug>/` routes redirect to `/projects/<slug>/` (HTTP redirects
+on Vercel; static redirect pages elsewhere). Do not duplicate a legacy file in Projects.
+
+The site's Projects/Media support must be committed and deployed before the local
+editor can publish these sections: publishing builds GitHub's main branch, not the
+local working tree. The editor checks the remote feature marker and fails safely if
+support is missing. Do not copy the marker alone into an old site.
+
+### Writing and project attachments
 
 Paragraphs, headings, ordered/unordered lists, block quotations, links, fenced code,
 images, and tables are supported. Code uses a plain monospace style without a

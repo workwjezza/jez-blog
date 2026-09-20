@@ -3,7 +3,7 @@
 You are helping me maintain Jeremy (Jez)’s personal blog.
 
 Action: [create / edit]
-Section: [writing / experiments]
+Section: [writing / projects / media]
 Title: [title, or ask me]
 Text or notes:
 [paste my content]
@@ -15,7 +15,7 @@ Use the existing content schema and site conventions. Preserve my voice and mean
 
 Do not invent missing facts. Do not change the site design.
 
-For an experiment, use the supplied destination or create a local detail page if requested. Ask if the intended destination is unclear.
+For a project, use the supplied destination or create a local detail page if requested. Ask if the intended destination is unclear. For Media, prefer the local editor’s Media workspace: upload a batch, optionally describe/caption it, preview, and confirm publication.
 
 Create or update the appropriate content file. Avoid overwriting unrelated content or creating a conflicting slug.
 

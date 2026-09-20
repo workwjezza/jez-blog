@@ -1,9 +1,9 @@
 ---
 import SiteLayout from '../layouts/SiteLayout.astro';
 import { site } from '../config/site';
-import { getPublicExperiments, getPublicWriting } from '../lib/content';
+import { getPublicProjects, getPublicWriting, getPublicMedia } from '../lib/content';
 
-const [experiments, writing] = await Promise.all([getPublicExperiments(), getPublicWriting()]);
+const [projects, writing, media] = await Promise.all([getPublicProjects(), getPublicWriting(), getPublicMedia()]);
 const bio = site.bio.trim();
 ---
 <SiteLayout description={bio || undefined}>
@@ -14,11 +14,11 @@ const bio = site.bio.trim();
       {site.socialLinks.map(link => <a href={link.href}>{link.label}</a>)}
     </nav>
   </header>
-  <section aria-labelledby="experiments">
-    <h2 id="experiments" class="section-heading">Experiments:</h2>
-    {experiments.length > 0 && <ul class="experiment-list">
-      {experiments.map(({ data }) => <li>
-        <a href={data.externalUrl ?? `/experiments/${data.slug}/`}>{data.title}</a>
+  <section aria-labelledby="projects">
+    <h2 id="projects" class="section-heading">Projects:</h2>
+    {projects.length > 0 && <ul class="project-list">
+      {projects.map(({ data }) => <li>
+        <a href={data.externalUrl ?? `/projects/${data.slug}/`}>{data.title}</a>
         {data.description && <p>{data.description}</p>}
       </li>)}
     </ul>}
@@ -29,5 +29,19 @@ const bio = site.bio.trim();
     {writing.length > 0 && <ul class="writing-list">
       {writing.map(({ data }) => <li><a href={`/writing/${data.slug}/`}>{data.title}</a></li>)}
     </ul>}
+  </section>
+  <hr />
+  <section aria-labelledby="media">
+    <h2 id="media" class="section-heading">Media:</h2>
+    {media.some(entry => entry.data.items.length > 0) && <div class="media-grid">
+      {media.flatMap(({ data }) => data.items.map(item => <figure>
+        {item.kind === 'image'
+          ? <a href={item.src} aria-label={item.alt || item.caption || 'Open image'}><img src={item.src} alt={item.alt} loading="lazy" decoding="async" /></a>
+          : item.kind === 'video'
+            ? <video src={item.src} controls preload="none" playsinline aria-label={item.alt || item.caption || 'Video'} />
+            : <audio src={item.src} controls preload="none" aria-label={item.alt || item.caption || 'Audio'} />}
+        {item.caption && <figcaption>{item.caption}</figcaption>}
+      </figure>))}
+    </div>}
   </section>
 </SiteLayout>

@@ -21,13 +21,15 @@ npm run preview
 ```
 
 - Configuration: `src/config/site.ts`
-- Empty collections: `src/content/writing/`, `src/content/experiments/`
+- Empty collections: `src/content/writing/`, `src/content/projects/`, `src/content/media/`
+- Legacy project compatibility: `src/content/experiments/` is still read; old detail URLs redirect to `/projects/`.
 - Reading template: `src/layouts/ReadingLayout.astro`
 - Content templates: `docs/templates/` (not loaded as content)
 - Authoring guide: `docs/AUTHORING.md`
 - Reusable creator prompt: `docs/CREATOR-PROMPT.md`
 - Measured design specification: `docs/REFERENCE-DESIGN.md`
 - Checks and limitations: `docs/VERIFICATION.md`
+- Optional local visual editor: `docs/LOCAL-EDITOR.md`
 
 Production deployment is authorized on Vercel project `jez4/jez-blog`, with the
 requested domain `jez.blog`. The project is connected to GitHub repository

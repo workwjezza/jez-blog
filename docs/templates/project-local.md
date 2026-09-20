@@ -1,5 +1,5 @@
 ---
-title: "[Author-supplied title]"
+title: "[Author-supplied project title]"
 slug: replace-with-unique-slug
 draft: true
 # description: "Author-supplied optional short description"

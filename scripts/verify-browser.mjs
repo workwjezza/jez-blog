@@ -9,7 +9,7 @@ const [project, stage] = process.argv.slice(2);
 assert.ok(project && ['empty', 'populated'].includes(stage), 'Run through verify-build.mjs');
 assert.ok(process.env.PLAYWRIGHT_MODULE, 'Set PLAYWRIGHT_MODULE to an installed playwright/index.mjs');
 const { chromium } = await import(pathToFileURL(resolve(process.env.PLAYWRIGHT_MODULE)).href);
-const types = { '.html': 'text/html', '.css': 'text/css', '.svg': 'image/svg+xml' };
+const types = { '.html': 'text/html', '.css': 'text/css', '.svg': 'image/svg+xml', '.png': 'image/png' };
 const server = createServer(async (req, res) => {
   try {
     let path = decodeURIComponent(new URL(req.url, 'http://localhost').pathname);
@@ -29,7 +29,7 @@ try {
   const page = await browser.newPage();
   const errors = [];
   page.on('pageerror', error => errors.push(error.message));
-  const routes = stage === 'empty' ? ['/'] : ['/', '/writing/verification-post/', '/writing/undated/', '/experiments/local-verification/'];
+  const routes = stage === 'empty' ? ['/'] : ['/', '/writing/verification-post/', '/writing/undated/', '/projects/local-verification/', '/projects/new-project/'];
   for (const width of [1440, 1100, 1024, 768, 520, 390, 320]) {
     await page.setViewportSize({ width, height: 900 });
     for (const route of routes) {
@@ -40,7 +40,7 @@ try {
       assert.deepEqual(hiddenOverflow, [], `Internal horizontal overflow: ${route} at ${width}`);
       if (route === '/' && stage === 'empty') {
         assert.equal(await page.locator('h1').textContent(), 'Jeremy (Jez)');
-        assert.equal(await page.locator('section').count(), 2);
+        assert.equal(await page.locator('section').count(), 3);
         assert.equal(await page.locator('section ul').count(), 0);
         assert.equal(await page.locator('.bio').count(), 0);
         const rect = await page.locator('main').boundingBox();
@@ -52,6 +52,13 @@ try {
           assert.equal(focus.text, label);
           assert.equal(focus.outline, 'solid');
         }
+      }
+      if (route === '/' && stage === 'populated') {
+        const columns = await page.locator('.media-grid').evaluate(e => getComputedStyle(e).gridTemplateColumns.split(' ').length);
+        assert.equal(columns, width <= 520 ? 1 : width < 1100 ? 2 : 3);
+        assert.equal(await page.locator('.media-grid figure').count(), 2);
+        await page.locator('.media-grid img').first().scrollIntoViewIfNeeded();
+        await page.waitForFunction(() => [...document.querySelectorAll('.media-grid img')].every(img => img.complete && img.naturalWidth > 0));
       }
       // Magnification stress test; narrower viewports above independently verify reflow.
       await page.evaluate(() => { document.documentElement.style.zoom = '2'; });

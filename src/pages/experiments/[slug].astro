@@ -1,15 +1,10 @@
 ---
-import { render, type CollectionEntry } from 'astro:content';
-import ReadingLayout from '../../layouts/ReadingLayout.astro';
-import { getPublicExperiments } from '../../lib/content';
+import { getPublicProjects } from '../../lib/content';
 
 export async function getStaticPaths() {
-  return (await getPublicExperiments()).filter(entry => entry.data.slug).map(entry => ({
-    params: { slug: entry.data.slug }, props: { entry },
+  return (await getPublicProjects()).filter(entry => entry.data.slug).map(entry => ({
+    params: { slug: entry.data.slug },
   }));
 }
-interface Props { entry: CollectionEntry<'experiments'>; }
-const { entry } = Astro.props;
-const { Content } = await render(entry);
+return Astro.redirect(`/projects/${Astro.params.slug}/`, 301);
 ---
-<ReadingLayout {...entry.data}><Content /></ReadingLayout>

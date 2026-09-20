@@ -1,12 +1,12 @@
 # Verification report
 
 Environment: macOS, Node 24.18.0, Astro 7.3.3, Chrome 153.0.8010.50.
-Verification performed 2026-09-19. No production deployment was performed.
+Site checks rerun 2026-09-20 for Projects and Media. No production deployment was performed.
 
 ## Checks run
 
-- `npm test`: all six unit tests pass (empty input, fail-closed drafts, sorting,
-  conflicting slugs, experiment destinations, field validation).
+- `npm test`: all seven unit tests pass (empty input, fail-closed drafts, sorting,
+  conflicting slugs, project/legacy destinations, field validation, safe typed gallery assets).
 - `npm run build`: succeeds; Astro check reports zero errors, warnings, or hints.
   The content loader separately logs expected empty-collection warnings.
 - `npm run test:build` with optional Playwright tooling: isolated empty, populated,
@@ -16,8 +16,8 @@ Verification performed 2026-09-19. No production deployment was performed.
 - Empty and whitespace bios emit no paragraph or description metadata. A configured
   bio renders without changing a layout.
 - Exact name and all four social labels, destinations, and their ordering verified.
-- Both section headings remain visible with no entries, no lists, no placeholder
-  paragraphs, no public creation controls, and no extra homepage sections.
+- All three section headings remain visible with no entries, no lists, no placeholder
+  paragraphs, and no public creation controls. Media follows Writing.
 - Final output contains one HTML page and no client scripts, demo entries, creator
   docs, reference-author content, or reference-author metadata.
 - Draft and default-draft content is absent from every emitted file, not only the
@@ -28,9 +28,13 @@ Verification performed 2026-09-19. No production deployment was performed.
   design and must never contain private/draft material.
 - Published relative images are emitted; rebuilding after unpublishing removes
   those generated assets as well as the associated page routes.
-- Public writing/local-experiment routes render Markdown paragraphs, headings,
+- Public writing/project routes render Markdown paragraphs, headings,
   lists, quotes, links, code, images, tables, optional dates, and a working back link.
 - Invalid destination combinations and duplicate slugs fail the build.
+- Legacy project files render at `/projects/`; old URLs emit redirect pages. Slug
+  collisions between new Projects and legacy Experiments fail the build.
+- Gallery fixtures verify newest-first batches, draft exclusion, removal on
+  unpublish, lazy-loaded image rendering, and 3/2/1 columns across seven viewports.
 - Republishing an entry as a draft removes its previous generated route.
 - Chrome checks at 1440, 1100, 1024, 768, 520, 390, and 320 CSS pixels: no horizontal
   page or container overflow, including long unbroken titles, URLs, code, and tables.
@@ -55,7 +59,8 @@ Verification performed 2026-09-19. No production deployment was performed.
   tested or created. Deploy only the static build, never the source tree.
 - Visual differences are intentional and recorded in `docs/REFERENCE-DESIGN.md`:
   compact empty-page spacing, no sidebar, wider tablet column, inline social/back
-  links, explicit focus styling, and unboxed experiments. No claim of pixel identity.
+  links, explicit focus styling, unboxed projects, and the requested Media gallery.
+  No claim of pixel identity.
 
 ## Repeat browser verification
 

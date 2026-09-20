@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { publicEntries } from '../src/lib/content-policy.ts';
-import { writingSchema, experimentSchema } from '../src/lib/schemas.ts';
+import { writingSchema, projectSchema, experimentSchema, mediaSchema } from '../src/lib/schemas.ts';
 
 test('empty collections remain empty', () => {
   assert.deepEqual(publicEntries([]), []);
@@ -39,4 +39,16 @@ test('schemas reject invalid titles, slugs, dates, draft flags and orders', () =
     assert.equal(writingSchema.safeParse({ ...valid, ...invalid }).success, false);
   }
   assert.equal(writingSchema.safeParse({ ...valid, publicationDate: '2024-02-29' }).success, true);
+});
+
+test('projects preserve legacy validation and media validates safe local typed assets', () => {
+  assert.equal(projectSchema, experimentSchema);
+  const src = '/media/jez-editor/11111111-1111-4111-8111-111111111111/22222222-2222-4222-8222-222222222222.png';
+  const batch = { title: 'Media', slug: 'batch', createdAt: '2026-09-20T12:00:00Z', items: [{ src, kind: 'image' }] };
+  assert.equal(mediaSchema.parse(batch).draft, true);
+  assert.equal(mediaSchema.parse(batch).items[0].alt, '');
+  for (const item of [{ src: 'javascript:alert(1)', kind: 'image' }, { src: 'https://example.org/image.png', kind: 'image' }, { src, kind: 'script' }, { src, kind: 'video' }]) {
+    assert.equal(mediaSchema.safeParse({ ...batch, items: [item] }).success, false);
+  }
+  assert.equal(mediaSchema.safeParse({ ...batch, createdAt: 'invalid' }).success, false);
 });

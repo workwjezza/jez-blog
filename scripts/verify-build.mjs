@@ -38,16 +38,18 @@ try {
   }
   await symlink(join(root, 'node_modules'), join(scratch, 'node_modules'), 'dir');
   // Tests never modify the real content directories, even once the blog is populated.
-  for (const section of ['writing', 'experiments']) {
+  for (const section of ['writing', 'projects', 'experiments', 'media']) {
     await rm(join(scratch, 'src/content', section), { recursive: true, force: true });
     await mkdir(join(scratch, 'src/content', section), { recursive: true });
   }
   build();
   let html = await readFile(join(scratch, 'dist/index.html'), 'utf8');
   assert.match(html, /<h1>Jeremy \(Jez\)<\/h1>/);
-  assert.match(html, /Experiments:/);
+  assert.match(html, /Projects:/);
   assert.match(html, /Writing:/);
-  assert.equal((html.match(/<hr\b/g) ?? []).length, 1);
+  assert.match(html, /Media:/);
+  assert.ok(html.indexOf('id="writing"') < html.indexOf('id="media"'));
+  assert.equal((html.match(/<hr\b/g) ?? []).length, 2);
   assert.equal((html.match(/<a\b/g) ?? []).length, 4);
   assert.doesNotMatch(html, /<p\b|<ul\b|<script\b|<button\b|<footer\b|<aside\b/);
   const expected = [
@@ -93,9 +95,23 @@ try {
   await fixture('experiments', 'external', `title: "External ${long}"\nexternalUrl: https://example.org\ndraft: false\norder: -1\ndescription: "${long}"`);
   await fixture('experiments', 'draft-local', 'title: SECRET_EXPERIMENT\nslug: secret-experiment\ndraft: true', 'SECRET_EXPERIMENT_BODY');
   await fixture('experiments', 'draft-external', 'title: SECRET_EXTERNAL\nexternalUrl: https://example.org/secret-external\ndraft: true');
+  await fixture('projects', 'new', 'title: New project\nslug: new-project\ndraft: false');
+  const mediaRoot = '/media/jez-editor/11111111-1111-4111-8111-111111111111/';
+  const mediaFile = '22222222-2222-4222-8222-222222222222.png';
+  await mkdir(join(scratch, 'public', mediaRoot), { recursive: true });
+  await writeFile(join(scratch, 'public', mediaRoot, mediaFile), Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQIHWP4z8DwHwAFgAI/ScLbtAAAAABJRU5ErkJggg==', 'base64'));
+  const gallery = (slug, createdAt, caption, draft = false) => `title: Media batch\nslug: ${slug}\ndraft: ${draft}\ncreatedAt: "${createdAt}"\nitems:\n  - src: ${mediaRoot}${mediaFile}\n    kind: image\n    alt: Accessible gallery image\n    caption: ${caption}`;
+  await fixture('media', 'older', gallery('older', '2026-09-20T10:00:00Z', 'OLDER_GALLERY'));
+  await fixture('media', 'newer', gallery('newer', '2026-09-20T11:00:00Z', 'NEWER_GALLERY'));
+  await fixture('media', 'private', gallery('private', '2026-09-20T12:00:00Z', 'SECRET_GALLERY', true));
   build();
   const paths = (await files(join(scratch, 'dist'))).filter(f => f.endsWith('.html')).map(f => f.slice(join(scratch, 'dist').length));
-  assert.deepEqual(paths.sort(), ['/experiments/local-verification/index.html', '/index.html', '/writing/undated/index.html', '/writing/verification-post/index.html']);
+  assert.deepEqual(paths.sort(), ['/experiments/local-verification/index.html', '/experiments/new-project/index.html', '/index.html', '/projects/local-verification/index.html', '/projects/new-project/index.html', '/writing/undated/index.html', '/writing/verification-post/index.html']);
+  assert.match(await readFile(join(scratch, 'dist/experiments/local-verification/index.html'), 'utf8'), /\/projects\/local-verification\//);
+  const home = await readFile(join(scratch, 'dist/index.html'), 'utf8');
+  assert.match(home, /class="media-grid"/);
+  assert.match(home, /loading="lazy"/);
+  assert.ok(home.indexOf('NEWER_GALLERY') < home.indexOf('OLDER_GALLERY'));
   assert.doesNotMatch(await output(), /SECRET_|secret-draft|secret-default|secret-experiment|secret-external/);
   assert.match(await output(), /PUBLIC_LOCAL_IMAGE/);
   html = await readFile(join(scratch, 'dist/writing/verification-post/index.html'), 'utf8');
@@ -109,6 +125,9 @@ try {
   await fixture('writing', 'collision', 'title: Conflicting verification\nslug: verification-post\ndraft: true');
   assert.match(build(false), /Conflicting slug/);
   await rm(join(scratch, 'src/content/writing/collision.md'));
+  await fixture('projects', 'collision', 'title: Duplicate legacy slug\nslug: local-verification\ndraft: true');
+  assert.match(build(false), /Conflicting slug/);
+  await rm(join(scratch, 'src/content/projects/collision.md'));
   await fixture('experiments', 'invalid', 'title: Invalid verification\nslug: invalid\nexternalUrl: https://example.org');
   assert.match(build(false), /exactly one destination/);
   await rm(join(scratch, 'src/content/experiments/invalid.md'));
@@ -118,6 +137,9 @@ try {
   await fixture('writing', 'undated', 'title: SECRET_UNDATED\nslug: undated\ndraft: true');
   await fixture('experiments', 'local', 'title: SECRET_LOCAL\nslug: local-verification\ndraft: true');
   await fixture('experiments', 'external', 'title: SECRET_URL\nexternalUrl: https://example.org\ndraft: true');
+  await fixture('projects', 'new', 'title: SECRET_PROJECT\nslug: new-project\ndraft: true');
+  await fixture('media', 'older', gallery('older', '2026-09-20T10:00:00Z', 'SECRET_OLDER', true));
+  await fixture('media', 'newer', gallery('newer', '2026-09-20T11:00:00Z', 'SECRET_NEWER', true));
   build();
   assert.equal((await files(join(scratch, 'dist'))).filter(f => f.endsWith('.html')).length, 1);
   assert.doesNotMatch(await output(), /SECRET_|Verification-only body|PUBLIC_LOCAL_IMAGE/);

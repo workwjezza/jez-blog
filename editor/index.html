@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Jez Editor · Local</title></head>
+<body>
+  <aside class="library">
+    <h1>Jez Editor <small>local</small></h1>
+    <p class="muted">Private working copies.<br>Nothing publishes on save.</p>
+    <div class="row"><button id="new-writing">New writing</button><button id="new-project">Project</button><button id="new-media">Media</button></div>
+    <h2>Local drafts & revisions</h2><div id="draft-list"></div>
+    <div class="row"><h2>GitHub entries</h2><button id="sync">Refresh</button></div>
+    <p id="sync-status" class="muted">Refresh to load existing posts.</p><div id="remote-list"></div>
+    <h2>Publication activity</h2><div id="jobs"></div>
+    <p id="storage" class="muted"></p>
+    <button id="stop">Stop editor</button>
+  </aside>
+  <main>
+    <div id="notice" role="status" aria-live="polite">Starting local session…</div>
+    <section id="welcome"><h2>A quiet place to write.</h2><p>Create a draft or refresh GitHub to edit a published entry.</p><p>Autosave stays on this Mac. Publishing requires confirmation and deploys to <strong>jez.blog</strong>.</p></section>
+    <section id="workspace" hidden>
+      <header class="topbar"><span id="save-state" role="status">Saved locally</span><div class="row"><button id="preview">Preview</button><button id="publish" class="primary">Publish to jez.blog</button></div></header>
+      <div id="gallery-workspace" hidden>
+        <h2>Media gallery</h2>
+        <div id="gallery-drop" tabindex="0" role="group" aria-label="Upload media by dropping files or pasting images">
+          <label class="file-button">Upload files<input id="gallery-upload" type="file" multiple accept="image/png,image/jpeg,image/webp,image/gif,video/mp4,video/webm,audio/mpeg,audio/mp4,audio/ogg,audio/wav"></label>
+          <p>Drop files here or paste images. They become tiles automatically.</p>
+          <p class="muted">Images ≤10 MB; audio/video ≤25 MB; ≤50 MB per batch. PNG, JPEG, WebP, GIF, MP4, WebM, MP3, M4A, OGG, WAV. Convert HEIC first. Uploads stay private until you publish.</p>
+        </div>
+        <p class="muted">Captions and image descriptions are optional. Add a description for images that convey information; leave it blank for decorative images. New batches appear first. Arrows reorder this batch.</p>
+        <div id="gallery-items"></div>
+      </div>
+      <div id="text-workspace">
+      <label>Title<input id="title" placeholder="Your title" autocomplete="off"></label>
+      <div class="row metadata">
+        <label>URL slug<input id="slug" placeholder="your-title" autocomplete="off"></label>
+        <label id="destination-label" hidden>Destination<select id="destination"><option value="local">Local detail page</option><option value="external">External link</option></select></label>
+        <label id="external-label" hidden>External URL<input id="externalUrl" type="url" placeholder="https://"></label>
+      </div>
+      <details><summary>Optional details</summary><label>Description<input id="description"></label><div class="row metadata"><label>Publication date<input id="publicationDate" type="date"></label><label>Display order<input id="order" type="number" step="1"></label></div><p class="muted">Dates are added on first publication when absent. Lower order numbers appear first.</p></details>
+      <div class="row mode"><button id="visual-mode" aria-pressed="true">Visual</button><button id="source-mode" aria-pressed="false">Markdown source</button><button id="recover">Recover previous save</button></div>
+      <div id="toolbar" role="toolbar" aria-label="Text formatting">
+        <button data-command="paragraph">Text</button><button data-command="h2">H2</button><button data-command="h3">H3</button>
+        <button data-command="bold"><strong>B</strong></button><button data-command="italic"><em>I</em></button><button data-command="link">Link</button>
+        <button data-command="bulletList">• List</button><button data-command="orderedList">1. List</button><button data-command="blockquote">Quote</button>
+        <button data-command="codeBlock">Code</button><button data-command="undo">Undo</button><button data-command="redo">Redo</button>
+        <button data-command="up">Media ↑</button><button data-command="down">Media ↓</button><button data-command="edit-media">Edit selected media</button><button data-command="remove">Remove selected media</button>
+      </div>
+      <div id="editor" aria-label="Post body"></div>
+      <label id="source-label" hidden>Markdown body<textarea id="source" spellcheck="true"></textarea></label>
+      <p class="muted">Type ## then space for a heading, or - then space for a list. Formatting never rewrites your words.</p>
+      <section class="attachments" aria-labelledby="media-title"><div class="row"><h2 id="media-title">Media</h2><label class="file-button">Add media<input id="upload" type="file" multiple accept="image/png,image/jpeg,image/webp,image/gif,video/mp4,video/webm,audio/mpeg,audio/mp4,audio/ogg,audio/wav"></label></div><p class="muted">Drop files or paste images into the editor. Images ≤10 MB; audio/video ≤25 MB; ≤50 MB per post. Unused uploads stay private.</p><div id="media-list"></div></section>
+      </div>
+    </section>
+  </main>
+  <dialog id="media-dialog"><form method="dialog"><h2>Insert media</h2><p id="media-name"></p><label>Alt text / accessible description<input id="media-alt" required></label><label>Caption (optional)<input id="media-caption"></label><p class="muted">Media is inserted at the cursor. Select a media block to move or remove it. To replace it, remove the block and insert another file.</p><div class="row"><button value="cancel" formnovalidate>Cancel</button><button id="insert-media" value="insert">Insert</button></div></form></dialog>
+  <dialog id="publish-dialog"><form method="dialog"><h2>Publish to jez.blog?</h2><p id="publish-summary"></p><details><summary>Review saved version and proposed content</summary><h3>Current GitHub version</h3><pre id="publish-before"></pre><h3>Proposed content</h3><pre id="publish-after"></pre></details><p>This commits the selected entry and referenced media to the <strong>public GitHub repository</strong> and triggers a production deployment. It does not publish other drafts.</p><p>After pushing, deleting a post cannot erase Git history or third-party caches.</p><label class="check"><input id="publish-confirm" type="checkbox" required> I authorize this entry’s publication and deployment.</label><div class="row"><button value="cancel" formnovalidate>Cancel</button><button id="confirm-publish" value="publish" class="primary">Publish now</button></div></form></dialog>
+  <dialog id="preview-dialog"><div class="row"><h2>Private preview</h2><button id="close-preview">Close</button></div><p class="muted">Built locally with the blog’s reading template. Not uploaded.</p><iframe id="preview-frame" title="Private post preview" sandbox="allow-same-origin"></iframe></dialog>
+  <script type="module" src="/client/main.js"></script>
+</body>
+</html>

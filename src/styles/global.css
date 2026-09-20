@@ -41,18 +41,27 @@ a:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; opacity:
 .section-heading { font-size: 14px; line-height: 27px; font-weight: 600; }
 hr { border: 0; border-top: 1px solid var(--separator); margin: 27px 0; }
 
-.experiment-list { list-style: none; padding: 0; margin-top: var(--space); }
-.experiment-list li { display: grid; grid-template-columns: 180px minmax(0, 1fr); padding: 8px 12px; line-height: 1.35; }
-.experiment-list a { align-self: start; justify-self: start; max-width: 100%; padding-right: 12px; }
-.experiment-list p { font-style: italic; }
+.project-list { list-style: none; padding: 0; margin-top: var(--space); }
+.project-list li { display: grid; grid-template-columns: 180px minmax(0, 1fr); padding: 8px 12px; line-height: 1.35; }
+.project-list a { align-self: start; justify-self: start; max-width: 100%; padding-right: 12px; }
+.project-list p { font-style: italic; }
 .writing-list { list-style: none; padding: 0; margin-top: var(--space); }
 .writing-list li { line-height: 40px; }
 .writing-list a { display: inline-block; max-width: 100%; padding: 5px 12px; line-height: 27px; vertical-align: middle; }
 .writing-list a:hover { color: #fff; background: #000; opacity: .9; }
 @media (max-width: 520px) {
-  .experiment-list li { grid-template-columns: minmax(0, 1fr); gap: 6px; padding: 8px 10px; }
-  .experiment-list a { padding: 0; }
+  .project-list li { grid-template-columns: minmax(0, 1fr); gap: 6px; padding: 8px 10px; }
+  .project-list a { padding: 0; }
 }
+
+.media-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px 13.5px; margin-top: var(--space); align-items: start; }
+.media-grid figure { min-width: 0; }
+.media-grid a { display: block; }
+.media-grid img, .media-grid video { display: block; width: 100%; height: auto; }
+.media-grid audio { display: block; width: 100%; min-width: 0; }
+.media-grid figcaption { color: var(--muted); font-size: 13px; line-height: 1.4; margin-top: 8px; white-space: pre-wrap; }
+@media (max-width: 1099px) { .media-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 520px) { .media-grid { grid-template-columns: minmax(0, 1fr); } }
 
 .back-link { display: inline-block; margin-bottom: 27px; color: var(--muted); }
 .post-header h1 { font-size: 24px; line-height: 1.2; font-weight: 600; color: var(--emphasis); }

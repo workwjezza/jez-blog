@@ -40,8 +40,9 @@ CSS (black text and a translucent white background), not a rendered article link
 
 ## Deliberate adaptations for this site
 
-- Name, socials, Experiments, separator, Writing only. No sidebar, animations,
-  navigation spacer, weather/footer, biography, copied imagery, or extra sections.
+- Name, socials, Projects, separator, Writing, separator, Media. No sidebar,
+  animations, navigation spacer, weather/footer, or copied imagery. The Media
+  section and Projects rename were requested on 2026-09-20.
 - Keep the reference's x=305px / 700px reading column on wide screens (>=1100px).
   Below that, center a fluid column, capped at 700px, with at least 20px gutters.
   This avoids keeping a sidebar-sized blank column at tablet widths and zoom.
@@ -50,9 +51,12 @@ CSS (black text and a translucent white background), not a rendered article link
   rather than reproducing the stacked 76.5px margin/padding. No minimum heights.
 - Four plain social links sit on one wrapping line. Their order and exact labels
   come from site configuration, not the reference's identity.
-- Experiments retain title/description column alignment and mobile stacking but
+- Projects retain title/description column alignment and mobile stacking but
   omit table boxes and divider lines. They are a semantic list, not cards or a grid
   of decorative containers. Absent descriptions emit no placeholder paragraph.
+- Media uses three equal columns at >=1100px, two at 521–1099px, and one at <=520px.
+  Rows extend automatically, aligned at the top with uncropped media and optional
+  captions. No decorative cards, public uploader, autoplay, or client-side gallery script.
 - A 2px blue focus-visible outline is explicit rather than browser-dependent.
   No transitions or animations. Writing-link hover retains the reference style.
 - The reading page has one inline back link, a title, an optional unobtrusive date,

@@ -12,3 +12,5 @@ TESTFLIGHT_SETUP.md
 .DS_Store
 .env
 .env.*
+editor
+Jez Editor.command

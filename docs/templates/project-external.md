@@ -1,5 +1,5 @@
 ---
-title: "[Author-supplied title]"
+title: "[Author-supplied project title]"
 externalUrl: "[Author-supplied HTTP(S) destination]"
 draft: true
 # description: "Author-supplied optional short description"
